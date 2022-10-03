@@ -8,7 +8,7 @@ const headerStyles = css`
   padding: 15px;
   border-bottom: 1px solid pink;
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   div {
     display: flex;
     flex-direction: row;

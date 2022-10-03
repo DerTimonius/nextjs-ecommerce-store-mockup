@@ -1,93 +1,106 @@
-export const spaceshipDatabase = [
+const spaceshipDatabase = [
   {
     id: 1,
     name: 'Nostromo',
-    fullName: 'U.S.C.S.S. Nostromo',
-    firstAppearence: 1979,
-    knownFrom: 'Alien',
+    first_appearence: 1979,
+    known_from: 'Alien',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    price: 1234567.89,
+    price: 25000000,
+    condition: 'Infested with Xenomorphs, slightly burnt on the inside',
   },
   {
     id: 2,
     name: 'Rocinante',
-    knownFrom: 'The Expanse',
-    firstAppearence: 2015,
+    known_from: 'The Expanse',
+    first_appearence: 2015,
+    condition: 'Got shot at least once or twice',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    price: 1234567.89,
+    price: 60000000,
   },
   {
     id: 3,
     name: 'Millennium Falcon',
-    knownFrom: 'Star Wars',
-    firstAppearence: 1977,
+    known_from: 'Star Wars',
+    first_appearence: 1977,
+    condition: 'Got shot repeatedly by the empire',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    price: 1234567.89,
+    price: 120000000,
   },
   {
     id: 4,
     name: 'Avalon',
-    knownFrom: 'Passengers',
-    firstAppearence: 2016,
+    known_from: 'Passengers',
+    first_appearence: 2016,
+    condition: 'The reactor almost exploded, but the inside is like a forest!',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    price: 1234567.89,
+    price: 250000000,
   },
   {
     id: 5,
     name: 'Serenity',
-    knownFrom: 'Firefly',
-    firstAppearence: 2002,
+    known_from: 'Firefly',
+    first_appearence: 2002,
+    condition: 'In the very best shape thanks to Kaylee',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
-    price: 1234567.89,
+    price: 40000000,
   },
   {
     id: 6,
     name: 'Infinity',
-    firstAppearence: 2012,
-    knownFrom: 'Halo',
-    price: 1234567.89,
+    first_appearence: 2012,
+    known_from: 'Halo',
+    price: 10000000,
+    condition: 'Presumed to be destroyed',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
   },
   {
     id: 7,
     name: 'Heptapods',
-    firstAppearence: 2016,
-    knownFrom: 'Arrival',
-    price: 1234567.89,
+    first_appearence: 2016,
+    known_from: 'Arrival',
+    price: 25000000,
+    condition: 'As good as new, but humans were inside!',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
   },
   {
     id: 8,
     name: 'Endurance',
-    knownFrom: 'Interstellar',
-    firstAppearence: 2014,
-    price: 1234567.89,
+    known_from: 'Interstellar',
+    first_appearence: 2014,
+    price: 60000000,
+    condition:
+      'Had to endure immense tidal forces near a black hole, but held up without a scratch',
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
   },
   {
     id: 9,
-    price: 1234567.89,
+    price: 10000000,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     name: 'Event Horizon',
-    knownFrom: 'Event Horizon',
-    firstAppearence: 1997,
+    known_from: 'Event Horizon',
+    condition:
+      'The crew was demonically possessed, so its condition is accordingly',
+    first_appearence: 1997,
   },
   {
     id: 10,
-    price: 1234567.89,
+    price: 15000000,
     description:
       'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.',
     name: 'Discovery One',
-    knownFrom: '2001 - A space odyssey',
-    firstAppearence: 1968,
+    known_from: '2001 - A space odyssey',
+    condition: 'Kind of deteriorated after HAL was shut down',
+    first_appearence: 1968,
   },
 ];
+
+export { spaceshipDatabase };

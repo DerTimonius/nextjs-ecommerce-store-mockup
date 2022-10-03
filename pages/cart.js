@@ -1,8 +1,9 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
-import { spaceshipDatabase } from '../databases/spaceships';
+import { getAllSpaceships } from '../databases/spaceshipDatabase.ts';
 import { getCookies, setCookies } from '../utils/cookies';
+import { parsePrice } from '../utils/parsePrice.js';
 
 const cartStyles = css`
   display: flex;
@@ -81,7 +82,6 @@ export default function Cart(props) {
       <div>
         {props.parsed.length ? (
           <>
-            <p>Yay, cookies</p>
             {props.spaceships.map((spaceship) => {
               if (spaceship.quantity > 0) {
                 return (
@@ -104,6 +104,7 @@ export default function Cart(props) {
                       </div>
                       <hr style={{ width: '480px', alignSelf: 'self-end' }} />
                       <div className="quantity-price">
+                        <h5>{parsePrice(spaceship.price)}/ship</h5>
                         <p>
                           Quantity:{' '}
                           <button
@@ -119,7 +120,9 @@ export default function Cart(props) {
                           </button>
                         </p>
 
-                        <h4>€ {spaceship.quantity * spaceship.price}</h4>
+                        <h4>
+                          {parsePrice(spaceship.quantity * spaceship.price)}
+                        </h4>
                       </div>
                     </div>
                   </section>
@@ -130,7 +133,8 @@ export default function Cart(props) {
             })}{' '}
             <div className="total">
               <h4>
-                Your total is € <span>{getSumFromCart(props.spaceships)}</span>
+                Your total is €{' '}
+                <span>{parsePrice(getSumFromCart(props.spaceships))}</span>
               </h4>
               <button>Proceed to Checkout</button>
             </div>
@@ -146,12 +150,13 @@ export default function Cart(props) {
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const parsedCookies =
     context.req.cookies.cart !== undefined
       ? JSON.parse(context.req.cookies.cart)
       : [];
-  const spaceships = spaceshipDatabase.map((spaceship) => {
+  const spaceships = await getAllSpaceships();
+  const parsedSpaceships = spaceships.map((spaceship) => {
     return {
       ...spaceship,
       quantity:
@@ -163,7 +168,7 @@ export function getServerSideProps(context) {
 
   return {
     props: {
-      spaceships: spaceships,
+      spaceships: parsedSpaceships,
       parsed: parsedCookies,
     },
   };

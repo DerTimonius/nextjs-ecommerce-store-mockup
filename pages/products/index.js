@@ -2,7 +2,8 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { spaceshipDatabase } from '../../databases/spaceships';
+import { getAllSpaceships } from '../../databases/spaceshipDatabase.ts';
+import { parsePrice } from '../../utils/parsePrice.js';
 
 const productsStyle = css`
   padding: 12px 24px;
@@ -64,7 +65,7 @@ export default function Spaceships({ spaceships }) {
                   First appearence: <strong>{spaceship.firstAppearence}</strong>
                 </p>
                 <p>
-                  Price: <i>{spaceship.price} €</i>
+                  Price: <i>{parsePrice(spaceship.price)}</i>
                 </p>
               </div>
             </div>
@@ -75,8 +76,8 @@ export default function Spaceships({ spaceships }) {
   );
 }
 
-export function getServerSideProps() {
-  const spaceships = spaceshipDatabase;
+export async function getServerSideProps() {
+  const spaceships = await getAllSpaceships();
   return {
     props: {
       spaceships: spaceships,

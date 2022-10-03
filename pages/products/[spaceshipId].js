@@ -2,8 +2,9 @@ import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useState } from 'react';
-import { spaceshipDatabase } from '../../databases/spaceships';
+import { getSingleSpaceshipById } from '../../databases/spaceshipDatabase.ts';
 import { getCookies, setCookies } from '../../utils/cookies';
+import { parsePrice } from '../../utils/parsePrice.js';
 
 export default function Spaceship(props) {
   const [quantity, setQuantity] = useState(1);
@@ -42,7 +43,7 @@ export default function Spaceship(props) {
           height={400}
           alt={`${props.spaceship.name} in space`}
         />
-        <p>Price: {props.spaceship.price} €</p>
+        <p>Price: {parsePrice(props.spaceship.price)} </p>
         <div>Quantity: {quantity}</div>
         <button onClick={() => setQuantity(quantity + 1)}>+</button>
         <button
@@ -88,18 +89,18 @@ export default function Spaceship(props) {
       <div>
         <p>Known from: {props.spaceship.knownFrom}</p>
         <p>First appearence: {props.spaceship.firstAppearence}</p>
+        <p>Condition: {props.spaceship.condition}</p>
         <p>{props.spaceship.description}</p>{' '}
       </div>
     </>
   );
 }
 
-export function getServerSideProps(context) {
+export async function getServerSideProps(context) {
   const spaceshipId = parseInt(context.query.spaceshipId);
 
-  const foundShip = spaceshipDatabase.find((spaceship) => {
-    return spaceship.id === spaceshipId;
-  });
+  const foundShip = await getSingleSpaceshipById(spaceshipId);
+
   if (typeof foundShip === 'undefined') {
     context.res.statusCode = 404;
     return {
