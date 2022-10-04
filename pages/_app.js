@@ -7,6 +7,7 @@ function MyApp({ Component, pageProps }) {
     <div>
       <Global
         styles={css`
+          @import url('https://fonts.googleapis.com/css2?family=Expletus+Sans:wght@500;700&family=Revalia&display=swap');
           *,
           *::before,
           *::after {
@@ -17,15 +18,32 @@ function MyApp({ Component, pageProps }) {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
               Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue',
               sans-serif;
-            margin: 12px;
-            padding: 12px 24px;
+            background-image: url(/img/Background.jpg);
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: absolute;
+            top: 61px;
+            width: 100vw;
+          }
+          h1,
+          h2 {
+            /* font-family: 'Revalia', cursive; */
+            font-family: 'Expletus Sans', Arial, cursive;
+          }
+          h1 {
+            font-size: 72px;
           }
           a {
-            text-decoration: underline 0.15em rgba(255, 255, 255, 0);
-            transition: text-decoration-color 0.1s ease-in;
+            opacity: 0.7;
+            transition: all 0.15s linear;
+            font-size: 18px;
           }
           a:hover {
-            text-decoration-color: rgba(255, 255, 255, 0.8);
+            opacity: 1;
+            font-size: 20px;
+          }
+          img {
+            border-radius: 5px;
           }
         `}
       />

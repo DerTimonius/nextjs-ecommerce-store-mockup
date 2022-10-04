@@ -7,7 +7,9 @@ export default function History() {
         <title>History page</title>
         <meta name="description" content="History of spaceships in fiction" />
       </Head>
-      <p>This will be the history page</p>
+      <main>
+        <p>This will be the history page</p>
+      </main>
     </>
   );
 }

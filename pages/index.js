@@ -1,8 +1,37 @@
+import { css } from '@emotion/react';
 import Head from 'next/head';
 
-export default function Home() {
+const landingStyles = css`
+  h1 {
+    font-family: 'Revalia', Arial, cursive;
+    animation-name: fadeIn;
+    animation-duration: 2s;
+    color: #ddd;
+  }
+  main {
+    height: 100vh;
+    text-align: center;
+    padding-top: 48px;
+    /*  display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+  }
+  @keyframes fadeIn {
+    0% {
+      transform: translateX(500px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+`;
+
+export default function Home(props) {
   return (
-    <div>
+    <div css={landingStyles}>
       <Head>
         <title>StarTravelHub</title>
         <meta name="description" content="Buy a spaceship with StarTravelHub" />
@@ -11,10 +40,10 @@ export default function Home() {
 
       <main>
         <h1>StarTravelHub</h1>
-        <hr />
-        <p>
+        <br />
+        {/* <p>
           Want to travel the stars? Buy a renowned spaceship with StarTravelHub!
-        </p>
+        </p> */}
       </main>
     </div>
   );

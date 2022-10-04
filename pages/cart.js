@@ -1,24 +1,31 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
 import { getAllSpaceships } from '../databases/spaceshipDatabase.ts';
+import { buttonStyles } from '../styles/buttonStyles';
 import { getCookies, setCookies } from '../utils/cookies';
 import { parsePrice } from '../utils/parsePrice.js';
 
 const cartStyles = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 48px;
-  padding: 12px;
-
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #ddd;
+    height: 100vh;
+  }
   .item {
-    background: #d8d8d8;
+    backdrop-filter: blur(12px);
+    background: rgba(51, 51, 51, 0.2);
     width: 720px;
+    height: 160px;
     margin: 12px 24px;
     padding: 8px;
     display: flex;
     flex-direction: row;
+    align-items: center;
+    border-radius: 5px;
   }
   .name-description {
     margin: 0px 12px 12px 20px;
@@ -30,15 +37,29 @@ const cartStyles = css`
   }
 
   .total {
-    background: lightgrey;
+    backdrop-filter: blur(12px);
+    background: rgba(51, 51, 51, 0.2);
     width: 720px;
     height: 80px;
-    text-align: right;
+    margin-left: 24px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   .total span {
     font-size: 2em;
     margin: 12px;
     text-decoration: underline;
+  }
+  p span {
+    font-weight: bold;
+    margin: 12px;
+  }
+  hr {
+    width: 540px;
+    margin-bottom: 12px;
+    margin-left: 20px;
   }
 `;
 
@@ -53,100 +74,136 @@ function getSumFromCart(spaceships) {
   return totalSum;
 }
 
-function increaseQuantity(id) {
-  const existingCookie = getCookies('cart');
-  const correctShip = existingCookie.find((obj) => {
+function increaseQuantity(id, setCart, cart) {
+  const correctShip = cart.find((obj) => {
     return obj.id === id;
   });
-  correctShip.quantity++;
-  setCookies('cart', existingCookie);
+  setCart((prev) => {
+    return prev.map((item) =>
+      item.id === correctShip.id
+        ? { ...item, quantity: correctShip.quantity + 1 }
+        : item,
+    );
+  });
 }
-function decreaseQuantity(id) {
-  const existingCookie = getCookies('cart');
-  const correctShip = existingCookie.find((obj) => {
+function decreaseQuantity(id, setCart, cart) {
+  const correctShip = cart.find((obj) => {
     return obj.id === id;
   });
-  correctShip.quantity--;
+  setCart((prev) => {
+    return prev.map((item) =>
+      item.id === correctShip.id
+        ? { ...item, quantity: correctShip.quantity - 1 }
+        : item,
+    );
+  });
+}
+function updateCookies(cart) {
+  const existingCookie = getCookies('cart');
+  cart.map((cartItem) => {
+    return existingCookie.map((cookieItem) => {
+      if (cartItem.id === cookieItem.id) {
+        console.log('both', cookieItem.quantity, cartItem.quantity);
+        cookieItem.quantity = cartItem.quantity;
+        return cookieItem;
+      }
+      return null;
+    });
+  });
   setCookies('cart', existingCookie);
 }
 
 export default function Cart(props) {
+  const [cart, setCart] = useState(props.spaceships);
+
+  useEffect(() => {
+    updateCookies(cart);
+  }, [cart]);
   return (
-    <div css={cartStyles}>
+    <>
       <Head>
         <title>Shopping Cart</title>
         <meta name="description" content="Shopping Cart page" />
       </Head>
-      <h1>Your shopping cart</h1>
-
-      <div>
-        {props.parsed.length ? (
-          <>
-            {props.spaceships.map((spaceship) => {
-              if (spaceship.quantity > 0) {
-                return (
-                  <section key={`spaceship-${spaceship.id}`} className="item">
-                    <div>
-                      <Image
-                        src={`/img/${spaceship.id}-${spaceship.name
-                          .toLowerCase()
-                          .split(' ')
-                          .join('-')}.jpg`}
-                        width={150}
-                        height={150}
-                        alt={`${spaceship.name} in space`}
-                      />
-                    </div>
-                    <div className="item-description">
-                      <div className="name-description">
-                        <h2>{spaceship.name}</h2>
-                        <p>{spaceship.description.slice(0, 100)}...</p>
-                      </div>
-                      <hr style={{ width: '480px', alignSelf: 'self-end' }} />
-                      <div className="quantity-price">
-                        <h5>{parsePrice(spaceship.price)}/ship</h5>
-                        <p>
-                          Quantity:{' '}
-                          <button
-                            onClick={() => decreaseQuantity(spaceship.id)}
-                          >
-                            -
-                          </button>
-                          <b>{spaceship.quantity}</b>
-                          <button
-                            onClick={() => increaseQuantity(spaceship.id)}
-                          >
-                            +
-                          </button>
-                        </p>
-
-                        <h4>
-                          {parsePrice(spaceship.quantity * spaceship.price)}
-                        </h4>
-                      </div>
-                    </div>
-                  </section>
-                );
-              } else {
-                return null;
-              }
-            })}{' '}
-            <div className="total">
-              <h4>
-                Your total is €{' '}
-                <span>{parsePrice(getSumFromCart(props.spaceships))}</span>
-              </h4>
-              <button>Proceed to Checkout</button>
-            </div>
-          </>
-        ) : (
+      <main css={[cartStyles, buttonStyles]}>
+        <div className="container">
+          <h1>Your shopping cart</h1>
           <div>
-            <h4>No items in cart</h4>
-            <p>Add items to your cart to be able to proceed to checkout!</p>
+            {props.parsed.length ? (
+              <>
+                {cart.map((spaceship) => {
+                  if (spaceship.quantity > 0) {
+                    return (
+                      <div key={`spaceship-${spaceship.id}`} className="item">
+                        <div>
+                          <Image
+                            src={`/img/${spaceship.id}-${spaceship.name
+                              .toLowerCase()
+                              .split(' ')
+                              .join('-')}.jpg`}
+                            width={150}
+                            height={150}
+                            alt={`${spaceship.name} in space`}
+                          />
+                        </div>
+                        <div className="item-description">
+                          <div className="name-description">
+                            <h2>{spaceship.name}</h2>
+                            <p>{spaceship.description.slice(0, 100)}...</p>
+                          </div>
+                          <hr />
+                          <div className="quantity-price">
+                            <h5>{parsePrice(spaceship.price)}/ship</h5>
+                            <p>
+                              Quantity:{' '}
+                              <button
+                                id="btn-add"
+                                onClick={() => {
+                                  decreaseQuantity(spaceship.id, setCart, cart);
+                                }}
+                              >
+                                -
+                              </button>
+                              <span>{spaceship.quantity}</span>
+                              <button
+                                id="btn-subtract"
+                                onClick={() => {
+                                  increaseQuantity(spaceship.id, setCart, cart);
+                                }}
+                              >
+                                +
+                              </button>
+                            </p>
+
+                            <h4>
+                              {parsePrice(spaceship.quantity * spaceship.price)}
+                            </h4>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  } else {
+                    return null;
+                  }
+                })}{' '}
+                <div className="total">
+                  <h4>
+                    Your total is €{' '}
+                    <span>{parsePrice(getSumFromCart(cart))}</span>
+                  </h4>
+                  <button id="btn-checkout">Proceed to Checkout</button>
+                </div>
+              </>
+            ) : (
+              <div>
+                <h4>No items in cart</h4>
+                <p>Add items to your cart to be able to proceed to checkout!</p>
+              </div>
+            )}
           </div>
-        )}
-      </div>
-    </div>
+        </div>
+      </main>
+    </>
   );
 }
 

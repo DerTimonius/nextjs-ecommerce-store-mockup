@@ -7,8 +7,13 @@ const headerStyles = css`
   color: white;
   padding: 15px;
   border-bottom: 1px solid pink;
+  position: fixed;
+  width: 100vw;
+  z-index: 10;
   display: flex;
   justify-content: space-around;
+  /* font-family: 'Expletus Sans', cursive; */
+  font-family: 'Revalia', cursive;
   div {
     display: flex;
     flex-direction: row;
@@ -22,6 +27,7 @@ const headerStyles = css`
   h4 {
     cursor: pointer;
   }
+
   a + a {
     margin-left: 20px;
   }

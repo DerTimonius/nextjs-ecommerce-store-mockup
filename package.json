@@ -11,6 +11,9 @@
   },
   "dependencies": {
     "@emotion/react": "^11.10.4",
+    "@emotion/styled": "^11.10.4",
+    "@mui/material": "^5.10.7",
+    "@reduxjs/toolkit": "^1.8.5",
     "@types/dotenv-safe": "^8.1.2",
     "dotenv-cli": "^6.0.0",
     "dotenv-safe": "^8.2.0",
@@ -20,6 +23,7 @@
     "postgres": "3.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
+    "react-redux": "^8.0.4",
     "sharp": "^0.31.0"
   },
   "devDependencies": {
