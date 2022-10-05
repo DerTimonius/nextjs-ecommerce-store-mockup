@@ -1,29 +1,59 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import ImageCarousel from '../Components/Carousel';
 
 const landingStyles = css`
   h1 {
     font-family: 'Revalia', Arial, cursive;
-    animation-name: fadeIn;
+    animation-name: fadeInTop;
     animation-duration: 2s;
     color: #ddd;
   }
+  h2 {
+    animation-name: fadeInRight;
+    animation-duration: 2s;
+  }
+  .carousel {
+    animation-name: fadeInBottom;
+    animation-duration: 2s;
+  }
+
   main {
     height: 100vh;
     text-align: center;
     padding-top: 48px;
-    /*  display: flex;
+    display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center; */
+    align-items: center;
   }
-  @keyframes fadeIn {
+  @keyframes fadeInRight {
     0% {
       transform: translateX(500px);
       opacity: 0;
     }
     100% {
       transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeInTop {
+    0% {
+      transform: translateY(-500px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fadeInBottom {
+    0% {
+      transform: translateY(500px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
       opacity: 1;
     }
   }
@@ -41,9 +71,11 @@ export default function Home(props) {
       <main>
         <h1>StarTravelHub</h1>
         <br />
-        {/* <p>
+        <h2>
           Want to travel the stars? Buy a renowned spaceship with StarTravelHub!
-        </p> */}
+        </h2>
+        <br />
+        <ImageCarousel className="carousel" />
       </main>
     </div>
   );

@@ -49,8 +49,7 @@ function Header() {
       </Link>
       <nav>
         <Link href="/">Home</Link>
-        <Link href="/products">Products</Link>
-        <Link href="/history">History</Link>
+        <Link href="/products">Our Spaceships</Link>
         <Link href="/about">About</Link>
         <Link href="/cart">Cart</Link>
       </nav>

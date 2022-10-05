@@ -21,3 +21,8 @@ export async function getSingleSpaceshipById(id: number) {
   SELECT * FROM spaceships_migrated WHERE id = ${id};`;
   return spaceship;
 }
+export async function getSingleSpaceshipByName(name: string) {
+  const [spaceship] = await sql<Spaceship[]>`
+  SELECT * FROM spaceships_migrated WHERE name = ${name};`;
+  return spaceship;
+}

@@ -1,6 +1,7 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getAllSpaceships } from '../databases/spaceshipDatabase.ts';
 import { buttonStyles } from '../styles/buttonStyles';
@@ -157,7 +158,7 @@ export default function Cart(props) {
                             <p>
                               Quantity:{' '}
                               <button
-                                id="btn-add"
+                                id="btn-subtract"
                                 onClick={() => {
                                   decreaseQuantity(spaceship.id, setCart, cart);
                                 }}
@@ -166,7 +167,7 @@ export default function Cart(props) {
                               </button>
                               <span>{spaceship.quantity}</span>
                               <button
-                                id="btn-subtract"
+                                id="btn-add"
                                 onClick={() => {
                                   increaseQuantity(spaceship.id, setCart, cart);
                                 }}
@@ -191,7 +192,9 @@ export default function Cart(props) {
                     Your total is €{' '}
                     <span>{parsePrice(getSumFromCart(cart))}</span>
                   </h4>
-                  <button id="btn-checkout">Proceed to Checkout</button>
+                  <Link href="/checkout">
+                    <button id="btn-checkout">Proceed to Checkout</button>
+                  </Link>
                 </div>
               </>
             ) : (

@@ -52,7 +52,7 @@ const productsStyle = css`
     padding: 4px;
     background-color: rgba(255, 255, 255, 0.4);
     border-radius: 4px;
-    transition: all 0.3s linear;
+    transition: all 0.2s linear;
   }
   .product-link:hover {
     background-color: #ddd;

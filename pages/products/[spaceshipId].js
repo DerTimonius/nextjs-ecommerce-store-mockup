@@ -10,11 +10,9 @@ import { parsePrice } from '../../utils/parsePrice.js';
 
 const productPageStyle = css`
   .container {
-    /*    background-image: url(/img/Background-2.jpg);
-    background-size: cover; */
     color: #ddd;
     padding: 24px;
-    height: 100vh;
+    height: max-content;
   }
   .product-top {
     display: flex;
@@ -34,6 +32,10 @@ const productPageStyle = css`
     width: 1080px;
     margin-left: 160px;
     padding-top: 24px;
+    height: max-content;
+    backdrop-filter: blur(8px);
+    border-radius: 4px;
+    line-height: 24px;
   }
   p span {
     font-size: 1.1rem;
@@ -65,7 +67,10 @@ export default function Spaceship(props) {
         <title>
           {props.spaceship.name}, from {props.spaceship.knownFrom}
         </title>
-        <meta name="description" content="Spaceship not found" />
+        <meta
+          name="description"
+          content={`${props.spaceship.name} product page`}
+        />
       </Head>
       <main css={[productPageStyle, buttonStyles]}>
         <div className="container">
