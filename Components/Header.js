@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+import { Badge } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
 
@@ -28,12 +29,20 @@ const headerStyles = css`
     cursor: pointer;
   }
 
-  a + a {
-    margin-left: 20px;
+  a {
+    margin: 0 20px;
+  }
+  #shopping-cart {
+    cursor: pointer;
+    background: #ddd;
+  }
+  #shopping-cart:hover {
+    height: 40px;
+    width: 40px;
   }
 `;
 
-function Header() {
+function Header(props) {
   return (
     <header css={headerStyles}>
       <Link href="/">
@@ -51,7 +60,17 @@ function Header() {
         <Link href="/">Home</Link>
         <Link href="/products">Our Spaceships</Link>
         <Link href="/about">About</Link>
-        <Link href="/cart">Cart</Link>
+        <Link href="/cart">
+          <Badge badgeContent={props.totalQuantity} color="error">
+            <Image
+              src="/img/rocket.png"
+              width={30}
+              height={30}
+              alt="Shopping cart"
+              id="shopping-cart"
+            />
+          </Badge>
+        </Link>
       </nav>
     </header>
   );

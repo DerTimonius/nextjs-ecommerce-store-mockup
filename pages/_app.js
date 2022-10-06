@@ -1,8 +1,28 @@
 import '../styles/globals.css';
 import { css, Global } from '@emotion/react';
+import { useEffect, useState } from 'react';
 import Layout from '../Components/Layout';
+import { getCookies } from '../utils/cookies';
 
 function MyApp({ Component, pageProps }) {
+  // const [cartQuantity, setCartQuantity] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  function updateQuantity() {
+    const cartCookie = getCookies('cart');
+    if (cartCookie) {
+      let quantity = 0;
+      cartCookie.map((item) => (quantity += item.quantity));
+      setTotalQuantity(quantity);
+    }
+  }
+  useEffect(() => {
+    updateQuantity();
+  }, []);
+
+  function addToTotal(number) {
+    const sum = totalQuantity;
+    setTotalQuantity(sum + number);
+  }
   return (
     <div>
       <Global
@@ -47,8 +67,8 @@ function MyApp({ Component, pageProps }) {
           }
         `}
       />
-      <Layout>
-        <Component {...pageProps} />
+      <Layout totalQuantity={totalQuantity}>
+        <Component {...pageProps} addToTotal={addToTotal} />
       </Layout>
     </div>
   );

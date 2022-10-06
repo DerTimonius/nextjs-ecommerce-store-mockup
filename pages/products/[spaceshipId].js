@@ -109,6 +109,7 @@ export default function Spaceship(props) {
               <button
                 id="btn-cart"
                 onClick={() => {
+                  props.addToTotal(quantity);
                   const existingCookie = getCookies('cart');
                   if (existingCookie === undefined) {
                     setCookies('cart', [
@@ -145,6 +146,7 @@ export default function Spaceship(props) {
             <p>First appearence: {props.spaceship.firstAppearence}</p>
             <p>{props.spaceship.description}</p>{' '}
           </div>
+          <button onClick={console.log(props)}>props</button>
         </div>
       </main>
     </>

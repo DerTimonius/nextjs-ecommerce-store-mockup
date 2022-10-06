@@ -23,12 +23,13 @@ function ImageCarousel() {
       <Carousel
         stlye={styles}
         showArrows={true}
-        autoPlay={false}
+        autoPlay={true}
         infiniteLoop={true}
+        showThumbs={false}
       >
         <div>
           <Image
-            src={'/img/3-millennium-falcon.jpg'}
+            src="/img/3-millennium-falcon.jpg"
             width={720}
             height={480}
             alt="The spaceship Millennium Falcon, known from Star Wars"
@@ -37,7 +38,7 @@ function ImageCarousel() {
         </div>
         <div>
           <Image
-            src={'/img/4-avalon.jpg'}
+            src="/img/4-avalon.jpg"
             width={720}
             height={480}
             alt="The spaceship Avalon, known from Passengers"
@@ -46,7 +47,7 @@ function ImageCarousel() {
         </div>
         <div>
           <Image
-            src={'/img/1-nostromo.jpg'}
+            src="/img/1-nostromo.jpg"
             width={720}
             height={480}
             alt="The spaceship Nostromo, known from Alien"
@@ -55,7 +56,7 @@ function ImageCarousel() {
         </div>
         <div>
           <Image
-            src={'/img/8-endurance.jpg'}
+            src="/img/8-endurance.jpg"
             width={720}
             height={480}
             alt="The spaceship Endurance, known from Interstellar"
@@ -64,7 +65,7 @@ function ImageCarousel() {
         </div>
         <div>
           <Image
-            src={'/img/5-serenity.jpg'}
+            src="/img/5-serenity.jpg"
             width={720}
             height={480}
             alt="The spaceship Serenity, known from Firefly"
