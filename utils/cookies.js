@@ -15,3 +15,7 @@ export function getCookies(key) {
     return undefined;
   }
 }
+
+export function deleteCookies(key) {
+  return Cookies.remove(key);
+}

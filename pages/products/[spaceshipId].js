@@ -43,16 +43,16 @@ const productPageStyle = css`
   }
 `;
 
-export default function Spaceship(props) {
+export default function Spaceship({ error, spaceship, addToTotal }) {
   const [quantity, setQuantity] = useState(1);
-  if (props.error) {
+  if (error) {
     return (
       <>
         <Head>
           <title>Error, not found</title>
           <meta name="description" content="Spaceship not found" />
         </Head>
-        <h3>{props.error}</h3>
+        <h3>{error}</h3>
         <p>
           Sorry, the item you are looking for does not exist. Please take a look
           at the <Link href="/products">Products page</Link> to find some
@@ -65,30 +65,28 @@ export default function Spaceship(props) {
     <>
       <Head>
         <title>
-          {props.spaceship.name}, from {props.spaceship.knownFrom}
+          {spaceship.name}, from {spaceship.knownFrom}
         </title>
-        <meta
-          name="description"
-          content={`${props.spaceship.name} product page`}
-        />
+        <meta name="description" content={`${spaceship.name} product page`} />
       </Head>
       <main css={[productPageStyle, buttonStyles]}>
         <div className="container">
           <div className="product-top">
             <div className="product-img">
-              <h1>{props.spaceship.name}</h1>
+              <h1>{spaceship.name}</h1>
               <Image
-                src={`/img/${props.spaceship.id}-${props.spaceship.name
+                src={`/img/${spaceship.id}-${spaceship.name
                   .toLowerCase()
                   .split(' ')
                   .join('-')}.jpg`}
                 width={600}
                 height={400}
-                alt={`${props.spaceship.name} in space`}
+                alt={`${spaceship.name} in space`}
+                data-test-id="product-image"
               />{' '}
             </div>
             <div className="product-cart">
-              <p>Known from: {props.spaceship.knownFrom}</p>
+              <p>Known from: {spaceship.knownFrom}</p>
               <div>
                 <p>Quantity: {quantity}</p>
                 <button onClick={() => setQuantity(quantity + 1)} id="btn-add">
@@ -108,21 +106,22 @@ export default function Spaceship(props) {
               <br />
               <button
                 id="btn-cart"
+                data-test-id="product-add-to-cart"
                 onClick={() => {
-                  props.addToTotal(quantity);
+                  addToTotal(quantity);
                   const existingCookie = getCookies('cart');
                   if (existingCookie === undefined) {
                     setCookies('cart', [
-                      { id: props.spaceship.id, quantity: quantity },
+                      { id: spaceship.id, quantity: quantity },
                     ]);
                     return;
                   } else {
                     const shipAlreadyInCart = existingCookie.find((obj) => {
-                      return obj.id === props.spaceship.id;
+                      return obj.id === spaceship.id;
                     });
                     if (!shipAlreadyInCart) {
                       existingCookie.push({
-                        id: props.spaceship.id,
+                        id: spaceship.id,
                         quantity: quantity,
                       });
                     } else {
@@ -134,19 +133,20 @@ export default function Spaceship(props) {
               >
                 Add to cart
               </button>
-              <p>Price: {parsePrice(props.spaceship.price)} </p>
+              <p data-test-id="product-price">
+                Price: {parsePrice(spaceship.price)}{' '}
+              </p>
             </div>
           </div>
           <br />
           <hr />
           <div className="product-bottom">
             <p>
-              Condition: <span>{props.spaceship.condition}</span>
+              Condition: <span>{spaceship.condition}</span>
             </p>
-            <p>First appearence: {props.spaceship.firstAppearence}</p>
-            <p>{props.spaceship.description}</p>{' '}
+            <p>First appearence: {spaceship.firstAppearence}</p>
+            <p>{spaceship.description}</p>{' '}
           </div>
-          <button onClick={console.log(props)}>props</button>
         </div>
       </main>
     </>

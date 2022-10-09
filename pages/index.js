@@ -1,13 +1,14 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import ImageCarousel from '../Components/Carousel';
 
 const landingStyles = css`
+  color: #ddd;
   h1 {
     font-family: 'Revalia', Arial, cursive;
     animation-name: fadeInTop;
     animation-duration: 2s;
-    color: #ddd;
   }
   h2 {
     animation-name: fadeInRight;
@@ -19,7 +20,7 @@ const landingStyles = css`
   }
 
   main {
-    height: 100vh;
+    height: max-content;
     text-align: center;
     padding-top: 48px;
     display: flex;
@@ -57,9 +58,23 @@ const landingStyles = css`
       opacity: 1;
     }
   }
+  .product-link {
+    color: black;
+    width: 320px;
+    height: 36px;
+    padding: 4px;
+    margin: 24px;
+    font-weight: bold;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 4px;
+    transition: all 0.2s linear;
+  }
+  .product-link:hover {
+    background-color: #ddd;
+  }
 `;
 
-export default function Home(props) {
+export default function Home() {
   return (
     <div css={landingStyles}>
       <Head>
@@ -72,10 +87,13 @@ export default function Home(props) {
         <h1>StarTravelHub</h1>
         <br />
         <h2>
-          Want to travel the stars? Buy a renowned spaceship with StarTravelHub!
+          Want to travel the stars? Buy a famous spaceship with StarTravelHub!
         </h2>
         <br />
         <ImageCarousel className="carousel" />
+        <div className="product-link">
+          <Link href="/products">View our ships!</Link>
+        </div>
       </main>
     </div>
   );

@@ -24,6 +24,12 @@ const checkoutStyles = css`
   .btn {
     margin-top: 12px;
   }
+  .expiration-date {
+    text-align: center;
+  }
+  .expiration-date input {
+    width: 50px;
+  }
 `;
 
 export default function Checkout() {
@@ -66,7 +72,6 @@ export default function Checkout() {
             <form className="form-personal-info">
               <label htmlFor="first-name">First name</label>
               <input
-                type="text"
                 name="first-name"
                 id="firstName"
                 data-test-id="checkout-first-name"
@@ -76,7 +81,6 @@ export default function Checkout() {
               />
               <label htmlFor="last-name">Last name</label>
               <input
-                type="text"
                 name="last-name"
                 id="lastName"
                 data-test-id="checkout-last-name"
@@ -95,7 +99,6 @@ export default function Checkout() {
               />
               <label htmlFor="address">Address</label>
               <input
-                type="text"
                 name="address"
                 id="address"
                 data-test-id="checkout-address"
@@ -104,7 +107,6 @@ export default function Checkout() {
               />
               <label htmlFor="city">City</label>
               <input
-                type="text"
                 name="city"
                 id="city"
                 data-test-id="checkout-city"
@@ -123,7 +125,6 @@ export default function Checkout() {
               />
               <label htmlFor="country">Country</label>
               <input
-                type="text"
                 name="country"
                 id="country"
                 data-test-id="checkout-country"
@@ -138,31 +139,35 @@ export default function Checkout() {
                 id="creditCardNumber"
                 data-test-id="checkout-credit-card"
                 onChange={handleChange}
+                minLength={16}
+                maxLength={16}
                 required
                 // style={!isCardNumberCorrect && { border: '1px solid red' }}
               />
-              <label htmlFor="expiration-date">Expiration date</label>
-              <input
-                type="number"
-                name="expiration-date"
-                id="expirationDateMonth"
-                data-test-id="checkout-expiration-date"
-                // min={01}
-                max={12}
-                onChange={handleChange}
-                required
-              />{' '}
-              /
-              <input
-                type="number"
-                name="expiration-date"
-                id="expirationDateYear"
-                // min={00}
-                max={99}
-                data-test-id="checkout-expiration-date"
-                onChange={handleChange}
-                required
-              />
+              <div className="expiration-date">
+                <label htmlFor="expiration-date">Expiration date</label> <br />
+                <input
+                  type="number"
+                  name="expiration-date"
+                  id="expirationDateMonth"
+                  data-test-id="checkout-expiration-date"
+                  min={1}
+                  max={12}
+                  onChange={handleChange}
+                  required
+                />{' '}
+                /
+                <input
+                  type="number"
+                  name="expiration-date"
+                  id="expirationDateYear"
+                  min={0}
+                  max={99}
+                  data-test-id="checkout-expiration-date"
+                  onChange={handleChange}
+                  required
+                />
+              </div>
               <label htmlFor="security-code">Security code</label>
               <input
                 type="number"

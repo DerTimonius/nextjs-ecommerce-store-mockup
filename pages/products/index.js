@@ -11,11 +11,13 @@ const productsStyle = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+
   .grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
   }
   .product {
+    cursor: pointer;
     display: flex;
     width: 360px;
     height: 420px;
@@ -88,14 +90,14 @@ export default function Spaceships({ spaceships }) {
           <div className="grid">
             {spaceships.map((spaceship) => {
               return (
-                <div key={`spaceship-id-${spaceship.id}`} className="product">
-                  <div className="product-hero">
-                    <h2>
-                      <Link href={`/products/${spaceship.id}`}>
-                        {spaceship.name}
-                      </Link>
-                    </h2>
-                    <Link href={`/products/${spaceship.id}`}>
+                <Link
+                  href={`/products/${spaceship.id}`}
+                  key={`spaceship-id-${spaceship.id}`}
+                  data-test-id={`product-${spaceship.id}`}
+                >
+                  <div key={`spaceship-id-${spaceship.id}`} className="product">
+                    <div className="product-hero">
+                      <h2>{spaceship.name}</h2>
                       <Image
                         src={`/img/${spaceship.id}-${spaceship.name
                           .toLowerCase()
@@ -105,21 +107,19 @@ export default function Spaceships({ spaceships }) {
                         height={200}
                         alt={`${spaceship.name} in space`}
                       />
-                    </Link>
-                  </div>
-                  <div className="product-overview">
-                    <p>
-                      Known from <strong>{spaceship.knownFrom}</strong>
-                    </p>
+                    </div>
+                    <div className="product-overview">
+                      <p>
+                        Known from <strong>{spaceship.knownFrom}</strong>
+                      </p>
 
-                    <p>
-                      Price <i>{parsePrice(spaceship.price)}</i>
-                    </p>
+                      <p>
+                        Price <i>{parsePrice(spaceship.price)}</i>
+                      </p>
+                    </div>
+                    <div className="product-link">View ship!</div>
                   </div>
-                  <div className="product-link">
-                    <Link href={`/products/${spaceship.id}`}>View ship</Link>
-                  </div>
-                </div>
+                </Link>
               );
             })}
           </div>

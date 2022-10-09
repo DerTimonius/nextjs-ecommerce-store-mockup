@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { getAllSpaceships } from '../databases/spaceshipDatabase.ts';
 import { buttonStyles } from '../styles/buttonStyles';
-import { getCookies, setCookies } from '../utils/cookies';
+import { deleteCookies, getCookies, setCookies } from '../utils/cookies';
 import { parsePrice } from '../utils/parsePrice.js';
 
 const cartStyles = css`
@@ -42,7 +42,6 @@ const cartStyles = css`
     background: rgba(51, 51, 51, 0.2);
     width: 720px;
     height: 80px;
-    margin-left: 24px;
     padding: 12px;
     display: flex;
     justify-content: space-between;
@@ -61,6 +60,10 @@ const cartStyles = css`
     width: 540px;
     margin-bottom: 12px;
     margin-left: 20px;
+  }
+  .delete-button {
+    background-color: orangered;
+    margin-left: 8px;
   }
 `;
 
@@ -99,12 +102,22 @@ function decreaseQuantity(id, setCart, cart) {
     );
   });
 }
+function deleteAll(setCart) {
+  setCart([]);
+  deleteCookies('cart');
+}
+function removeItem(cart, setCart, id) {
+  const newCart = cart.filter((item) => item.id !== id);
+  setCart(newCart);
+  const cookie = getCookies('cart');
+  const cookieWithoutItem = cookie.filter((item) => item.id !== id);
+  setCookies('cart', cookieWithoutItem);
+}
 function updateCookies(cart) {
   const existingCookie = getCookies('cart');
   cart.map((cartItem) => {
     return existingCookie.map((cookieItem) => {
       if (cartItem.id === cookieItem.id) {
-        console.log('both', cookieItem.quantity, cartItem.quantity);
         cookieItem.quantity = cartItem.quantity;
         return cookieItem;
       }
@@ -118,7 +131,9 @@ export default function Cart(props) {
   const [cart, setCart] = useState(props.spaceships);
 
   useEffect(() => {
-    updateCookies(cart);
+    if (getCookies('cart')) {
+      updateCookies(cart);
+    }
   }, [cart]);
   return (
     <>
@@ -129,9 +144,18 @@ export default function Cart(props) {
       <main css={[cartStyles, buttonStyles]}>
         <div className="container">
           <h1>Your shopping cart</h1>
-          <div>
+          <div className="container">
             {props.parsed.length ? (
               <>
+                <button
+                  className="delete-button"
+                  onClick={() => {
+                    deleteAll(setCart);
+                    props.deleteTotal();
+                  }}
+                >
+                  Remove all
+                </button>
                 {cart.map((spaceship) => {
                   if (spaceship.quantity > 0) {
                     return (
@@ -161,6 +185,7 @@ export default function Cart(props) {
                                 id="btn-subtract"
                                 onClick={() => {
                                   decreaseQuantity(spaceship.id, setCart, cart);
+                                  props.decreaseOne();
                                 }}
                               >
                                 -
@@ -170,6 +195,7 @@ export default function Cart(props) {
                                 id="btn-add"
                                 onClick={() => {
                                   increaseQuantity(spaceship.id, setCart, cart);
+                                  props.addOne();
                                 }}
                               >
                                 +
@@ -181,6 +207,15 @@ export default function Cart(props) {
                             </h4>
                           </div>
                         </div>
+                        <button
+                          className="delete-button"
+                          onClick={() => {
+                            removeItem(cart, setCart, spaceship.id);
+                            props.removeFromTotal(spaceship.quantity);
+                          }}
+                        >
+                          Remove
+                        </button>
                       </div>
                     );
                   } else {
@@ -190,10 +225,14 @@ export default function Cart(props) {
                 <div className="total">
                   <h4>
                     Your total is €{' '}
-                    <span>{parsePrice(getSumFromCart(cart))}</span>
+                    <span data-test-id="cart-total">
+                      {parsePrice(getSumFromCart(cart))}
+                    </span>
                   </h4>
                   <Link href="/checkout">
-                    <button id="btn-checkout">Proceed to Checkout</button>
+                    <button id="btn-checkout" data-test-id="cart-checkout">
+                      Proceed to Checkout
+                    </button>
                   </Link>
                 </div>
               </>

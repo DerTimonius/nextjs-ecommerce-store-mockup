@@ -2,6 +2,7 @@ import { css } from '@emotion/react';
 import { Badge } from '@mui/material';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useContext, useEffect, useState } from 'react';
 
 const headerStyles = css`
   background-color: #333333;
@@ -42,7 +43,7 @@ const headerStyles = css`
   }
 `;
 
-function Header(props) {
+function Header({ totalQuantity, openDrawer }) {
   return (
     <header css={headerStyles}>
       <Link href="/">
@@ -56,12 +57,19 @@ function Header(props) {
           <h4>StarTravelHub</h4>
         </div>
       </Link>
+      {/* <button onClick={openDrawer}>Drawer</button> */}
       <nav>
         <Link href="/">Home</Link>
-        <Link href="/products">Our Spaceships</Link>
+        <Link href="/products" data-test-id="products-link">
+          Our Spaceships
+        </Link>
         <Link href="/about">About</Link>
-        <Link href="/cart">
-          <Badge badgeContent={props.totalQuantity} color="error">
+        <Link href="/cart" data-test-id="cart-link">
+          <Badge
+            badgeContent={totalQuantity}
+            color="error"
+            data-test-id="cart-count"
+          >
             <Image
               src="/img/rocket.png"
               width={30}

@@ -5,7 +5,6 @@ import Layout from '../Components/Layout';
 import { getCookies } from '../utils/cookies';
 
 function MyApp({ Component, pageProps }) {
-  // const [cartQuantity, setCartQuantity] = useState(0);
   const [totalQuantity, setTotalQuantity] = useState(0);
   function updateQuantity() {
     const cartCookie = getCookies('cart');
@@ -23,6 +22,22 @@ function MyApp({ Component, pageProps }) {
     const sum = totalQuantity;
     setTotalQuantity(sum + number);
   }
+  function addOne() {
+    const sum = totalQuantity;
+    setTotalQuantity(sum + 1);
+  }
+  function decreaseOne() {
+    const sum = totalQuantity;
+    setTotalQuantity(sum - 1);
+  }
+  function deleteTotal() {
+    setTotalQuantity(0);
+  }
+  function removeFromTotal(quantity) {
+    const sum = totalQuantity;
+    setTotalQuantity(sum - quantity);
+  }
+
   return (
     <div>
       <Global
@@ -47,7 +62,6 @@ function MyApp({ Component, pageProps }) {
           }
           h1,
           h2 {
-            /* font-family: 'Revalia', cursive; */
             font-family: 'Expletus Sans', Arial, cursive;
           }
           h1 {
@@ -68,7 +82,14 @@ function MyApp({ Component, pageProps }) {
         `}
       />
       <Layout totalQuantity={totalQuantity}>
-        <Component {...pageProps} addToTotal={addToTotal} />
+        <Component
+          {...pageProps}
+          addToTotal={addToTotal}
+          addOne={addOne}
+          decreaseOne={decreaseOne}
+          deleteTotal={deleteTotal}
+          removeFromTotal={removeFromTotal}
+        />
       </Layout>
     </div>
   );
