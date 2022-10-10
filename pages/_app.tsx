@@ -1,11 +1,12 @@
 import '../styles/globals.css';
 import { css, Global } from '@emotion/react';
+import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import Layout from '../Components/Layout';
 import { getCookies } from '../utils/cookies';
 
-function MyApp({ Component, pageProps }) {
-  const [totalQuantity, setTotalQuantity] = useState(0);
+function MyApp({ Component, pageProps }: AppProps) {
+  const [totalQuantity, setTotalQuantity] = useState<number>(0);
   function updateQuantity() {
     const cartCookie = getCookies('cart');
     if (cartCookie) {
@@ -18,7 +19,7 @@ function MyApp({ Component, pageProps }) {
     updateQuantity();
   }, []);
 
-  function addToTotal(number) {
+  function addToTotal(number: number) {
     const sum = totalQuantity;
     setTotalQuantity(sum + number);
   }
@@ -33,7 +34,7 @@ function MyApp({ Component, pageProps }) {
   function deleteTotal() {
     setTotalQuantity(0);
   }
-  function removeFromTotal(quantity) {
+  function removeFromTotal(quantity: number) {
     const sum = totalQuantity;
     setTotalQuantity(sum - quantity);
   }

@@ -51,7 +51,7 @@ export default function Checkout({ deleteTotal }) {
       [e.target.id]: e.target.value,
     });
   };
-  const handleSubmit = (e) => {
+  const handleSubmit = () => {
     if (!checkNumberLength(formData.creditCardNumber, 16)) {
       // e.preventDefault();
       setIsCardNumberCorrect(false);

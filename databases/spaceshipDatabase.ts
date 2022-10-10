@@ -1,6 +1,6 @@
 import { sql } from './connect';
 
-export type Spaceship = {
+export type SpaceshipType = {
   id: number;
   name: string;
   condition: string | null;
@@ -11,13 +11,13 @@ export type Spaceship = {
 };
 
 export async function getAllSpaceships() {
-  const spaceships = await sql<Spaceship[]>`
+  const spaceships = await sql<SpaceshipType[]>`
   SELECT * FROM spaceships_migrated;`;
   return spaceships;
 }
 
 export async function getSingleSpaceshipById(id: number) {
-  const [spaceship] = await sql<Spaceship[]>`
+  const [spaceship] = await sql<SpaceshipType[]>`
   SELECT * FROM spaceships_migrated WHERE id = ${id};`;
   return spaceship;
 }

@@ -1,14 +1,14 @@
 import { css } from '@emotion/react';
 
 const footerStyles = css`
-  background-color: darkblue;
   color: white;
+  width: 100%;
 `;
 
 function Footer() {
   return (
     <footer css={footerStyles}>
-      <h6>copyright by a weird fella called Timon Jurschitsch</h6>
+      <h2>copyright by a weird fella called Timon Jurschitsch</h2>
     </footer>
   );
 }

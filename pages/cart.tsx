@@ -1,11 +1,20 @@
 import { css } from '@emotion/react';
+import { GetServerSidePropsContext } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { getAllSpaceships } from '../databases/spaceshipDatabase.ts';
+import {
+  getAllSpaceships,
+  SpaceshipType,
+} from '../databases/spaceshipDatabase';
 import { buttonStyles } from '../styles/buttonStyles';
-import { deleteCookies, getCookies, setCookies } from '../utils/cookies';
+import {
+  CookieType,
+  deleteCookies,
+  getCookies,
+  setCookies,
+} from '../utils/cookies';
 import { parsePrice } from '../utils/parsePrice.js';
 
 const cartStyles = css`
@@ -66,8 +75,11 @@ const cartStyles = css`
     margin-left: 8px;
   }
 `;
-
-function getSumFromCart(spaceships) {
+//
+type SpaceshipInCartType = SpaceshipType & {
+  quantity: number;
+};
+function getSumFromCart(spaceships: SpaceshipInCartType[]) {
   let totalSum = 0;
   spaceships.map((spaceship) => {
     if (spaceship.quantity > 0) {
@@ -78,43 +90,63 @@ function getSumFromCart(spaceships) {
   return totalSum;
 }
 
-function increaseQuantity(id, setCart, cart) {
+function increaseQuantity(
+  id: number,
+  setCart: Function,
+  cart: SpaceshipInCartType[],
+) {
   const correctShip = cart.find((obj) => {
     return obj.id === id;
   });
-  setCart((prev) => {
-    return prev.map((item) =>
-      item.id === correctShip.id
-        ? { ...item, quantity: correctShip.quantity + 1 }
-        : item,
-    );
-  });
+  if (correctShip) {
+    setCart((prev: SpaceshipInCartType[]) => {
+      return prev.map((item) =>
+        item.id === correctShip.id
+          ? { ...item, quantity: correctShip.quantity + 1 }
+          : item,
+      );
+    });
+  }
 }
-function decreaseQuantity(id, setCart, cart) {
+function decreaseQuantity(
+  id: number,
+  setCart: Function,
+  cart: SpaceshipInCartType[],
+) {
   const correctShip = cart.find((obj) => {
     return obj.id === id;
   });
-  setCart((prev) => {
-    return prev.map((item) =>
-      item.id === correctShip.id
-        ? { ...item, quantity: correctShip.quantity - 1 }
-        : item,
-    );
-  });
+  if (correctShip) {
+    setCart((prev: SpaceshipInCartType[]) => {
+      return prev.map((item) =>
+        item.id === correctShip.id
+          ? { ...item, quantity: correctShip.quantity - 1 }
+          : item,
+      );
+    });
+  }
 }
-function deleteAll(setCart) {
+function deleteAll(setCart: Function) {
   setCart([]);
   deleteCookies('cart');
 }
-function removeItem(cart, setCart, id) {
+function removeItem(
+  cart: SpaceshipInCartType[],
+  setCart: Function,
+  id: number,
+) {
   const newCart = cart.filter((item) => item.id !== id);
   setCart(newCart);
   const cookie = getCookies('cart');
+  if (!cookie) {
+    return;
+  }
   const cookieWithoutItem = cookie.filter((item) => item.id !== id);
   setCookies('cart', cookieWithoutItem);
 }
-function updateCookies(cart) {
+function updateCookies(cart: SpaceshipInCartType[]) {
   const existingCookie = getCookies('cart');
+  if (!existingCookie) return null;
   cart.map((cartItem) => {
     return existingCookie.map((cookieItem) => {
       if (cartItem.id === cookieItem.id) {
@@ -127,8 +159,16 @@ function updateCookies(cart) {
   setCookies('cart', existingCookie);
 }
 
-export default function Cart(props) {
-  const [cart, setCart] = useState(props.spaceships);
+type Props = {
+  spaceships: SpaceshipInCartType[];
+  parsedCookie: CookieType[];
+  deleteTotal: Function;
+  decreaseOne: Function;
+  addOne: Function;
+  removeFromTotal: Function;
+};
+export default function Cart(props: Props) {
+  const [cart, setCart] = useState<SpaceshipInCartType[]>(props.spaceships);
 
   useEffect(() => {
     if (getCookies('cart')) {
@@ -145,7 +185,7 @@ export default function Cart(props) {
         <div className="container">
           <h1>Your shopping cart</h1>
           <div className="container">
-            {props.parsed.length ? (
+            {props.parsedCookie.length ? (
               <>
                 <button
                   className="delete-button"
@@ -249,21 +289,23 @@ export default function Cart(props) {
   );
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps(context: GetServerSidePropsContext) {
   const parsedCookies =
     context.req.cookies.cart !== undefined
       ? JSON.parse(context.req.cookies.cart)
       : [];
   const spaceships = await getAllSpaceships();
-  const parsedSpaceships = spaceships.map((spaceship) => {
-    return {
-      ...spaceship,
-      quantity:
-        parsedCookies.find((item) => {
-          return item.id === spaceship.id;
-        })?.quantity || 0,
-    };
-  });
+  const parsedSpaceships: SpaceshipInCartType[] = spaceships.map(
+    (spaceship) => {
+      return {
+        ...spaceship,
+        quantity:
+          parsedCookies.find((item: CookieType) => {
+            return item.id === spaceship.id;
+          })?.quantity || 0,
+      };
+    },
+  );
 
   return {
     props: {
