@@ -2,7 +2,10 @@ import { css } from '@emotion/react';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getAllSpaceships } from '../../databases/spaceshipDatabase.ts';
+import {
+  getAllSpaceships,
+  SpaceshipType,
+} from '../../databases/spaceshipDatabase';
 import { parsePrice } from '../../utils/parsePrice.js';
 
 const productsStyle = css`
@@ -77,7 +80,10 @@ const productsStyle = css`
   }
 `;
 
-export default function Spaceships({ spaceships }) {
+type Props = {
+  spaceships: SpaceshipType[];
+};
+export default function Spaceships({ spaceships }: Props) {
   return (
     <div>
       <Head>

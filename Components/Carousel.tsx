@@ -1,7 +1,7 @@
+import 'react-responsive-carousel/lib/styles/carousel.min.css';
 import { css } from '@emotion/react';
 import Image from 'next/image';
 import { Carousel } from 'react-responsive-carousel';
-import styles from 'react-responsive-carousel/lib/styles/carousel.min.css';
 
 const carouselStyles = css`
   margin: 24px;
@@ -16,12 +16,11 @@ const carouselStyles = css`
   }
 `;
 
-function ImageCarousel() {
+function ImageCarousel({ className }: { className: string }) {
   return (
     <div css={carouselStyles}>
       <h2>Some of our spaceships!</h2>
       <Carousel
-        stlye={styles}
         showArrows={true}
         autoPlay={true}
         infiniteLoop={true}

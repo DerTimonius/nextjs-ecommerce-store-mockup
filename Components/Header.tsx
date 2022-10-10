@@ -41,7 +41,10 @@ const headerStyles = css`
   }
 `;
 
-function Header({ totalQuantity }) {
+type Props = {
+  totalQuantity: number;
+};
+function Header({ totalQuantity }: Props) {
   return (
     <header css={headerStyles}>
       <Link href="/">
