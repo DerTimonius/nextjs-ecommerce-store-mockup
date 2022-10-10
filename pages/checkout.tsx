@@ -38,33 +38,50 @@ const checkoutStyles = css`
     width: 50px;
   }
 `;
+const incorrectField = css`
+  border: 3px solid orangered;
+`;
+type FormDateType = {
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  address?: string;
+  city?: string;
+  postalCode?: number;
+  country?: string;
+  creditCardNumber?: number;
+  expirationDateMonth?: number;
+  expirationDateYear?: number;
+  securityCode?: number;
+};
 
-export default function Checkout({ deleteTotal }) {
+export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
   const [confirmed, setConfirmed] = useState(false);
-  const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState<FormDateType>({});
   const [isCardNumberCorrect, setIsCardNumberCorrect] = useState(true);
   const randomNumber = Math.floor(Math.random() * 10000000);
-
-  const handleChange = (e) => {
-    setFormData({
+  const title = confirmed ? 'Thank you for your order' : 'Checkout';
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    return setFormData({
       ...formData,
       [e.target.id]: e.target.value,
     });
   };
   const handleSubmit = () => {
-    if (!checkNumberLength(formData.creditCardNumber, 16)) {
-      // e.preventDefault();
-      setIsCardNumberCorrect(false);
-    }
-    if (isCardNumberCorrect) {
-      setConfirmed(true);
+    if (formData.creditCardNumber) {
+      if (!checkNumberLength(formData.creditCardNumber, 16)) {
+        // e.preventDefault();
+        setIsCardNumberCorrect(false);
+      } else if (isCardNumberCorrect) {
+        setConfirmed(true);
+      }
     }
   };
   useEffect(() => setIsCardNumberCorrect(true), [formData.creditCardNumber]);
   return (
     <>
       <Head>
-        <title>Checkout</title>
+        <title>{title}</title>
         <meta name="description" content="Checkout page at StarTravelHub" />
       </Head>
       <main css={[checkoutStyles, buttonStyles]}>
@@ -152,10 +169,8 @@ export default function Checkout({ deleteTotal }) {
                   id="creditCardNumber"
                   data-test-id="checkout-credit-card"
                   onChange={handleChange}
-                  minLength={16}
-                  maxLength={16}
+                  css={!isCardNumberCorrect && incorrectField}
                   required
-                  // style={!isCardNumberCorrect && { border: '1px solid red' }}
                 />
                 <div className="expiration-date">
                   <label htmlFor="expiration-date">Expiration date</label>{' '}
@@ -197,8 +212,8 @@ export default function Checkout({ deleteTotal }) {
             <button
               className="btn"
               data-test-id="checkout-confirm-order"
-              onClick={(e) => {
-                handleSubmit(e);
+              onClick={() => {
+                handleSubmit();
                 deleteCookies('cart');
                 deleteTotal();
               }}
