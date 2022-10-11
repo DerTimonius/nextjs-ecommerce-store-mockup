@@ -1,4 +1,4 @@
-import { getSumFromCart } from '../../pages/cart';
+import { getSumFromCart } from '../getSumFromCart';
 
 test('check cart sum function', () => {
   const input1 = [
