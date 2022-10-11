@@ -58,28 +58,32 @@ function Header({ totalQuantity }: Props) {
           <h4>StarTravelHub</h4>
         </div>
       </Link>
-      <nav>
-        <Link href="/">Home</Link>
-        <Link href="/products" data-test-id="products-link">
-          Our Spaceships
-        </Link>
-        <Link href="/about">About</Link>
-        <Link href="/cart" data-test-id="cart-link">
-          <Badge
-            badgeContent={totalQuantity}
-            color="error"
-            data-test-id="cart-count"
-          >
-            <Image
-              src="/img/rocket.png"
-              width={30}
-              height={30}
-              alt="Shopping cart"
-              id="shopping-cart"
-            />
-          </Badge>
-        </Link>
-      </nav>
+      <div>
+        <nav>
+          <Link href="/">Home</Link>
+          <Link href="/products" data-test-id="products-link">
+            <a data-test-id="products-link">Our Spaceships</a>
+          </Link>
+          <Link href="/about">About</Link>
+          <Link href="/cart" data-test-id="cart-link">
+            <a data-test-id="cart-link">
+              <Badge
+                badgeContent={totalQuantity}
+                color="error"
+                data-test-id="cart-count"
+              >
+                <Image
+                  src="/img/rocket.png"
+                  width={30}
+                  height={30}
+                  alt="Shopping cart"
+                  id="shopping-cart"
+                />
+              </Badge>
+            </a>
+          </Link>
+        </nav>
+      </div>
     </header>
   );
 }

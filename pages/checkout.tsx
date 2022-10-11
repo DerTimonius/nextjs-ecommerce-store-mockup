@@ -142,7 +142,6 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
                 />
                 <label htmlFor="postal-code">Postal Code</label>
                 <input
-                  type="number"
                   name="postal-code"
                   id="postalCode"
                   data-test-id="checkout-postal-code"
@@ -176,26 +175,14 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
                   <label htmlFor="expiration-date">Expiration date</label>{' '}
                   <br />
                   <input
-                    type="number"
+                    type="text"
                     name="expiration-date"
-                    id="expirationDateMonth"
+                    id="expiration-date"
                     data-test-id="checkout-expiration-date"
-                    min={1}
-                    max={12}
                     onChange={handleChange}
+                    placeholder="MM/YY"
                     required
                   />{' '}
-                  /
-                  <input
-                    type="number"
-                    name="expiration-date"
-                    id="expirationDateYear"
-                    min={0}
-                    max={99}
-                    data-test-id="checkout-expiration-date"
-                    onChange={handleChange}
-                    required
-                  />
                 </div>
                 <label htmlFor="security-code">Security code</label>
                 <input

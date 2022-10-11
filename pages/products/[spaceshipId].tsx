@@ -9,9 +9,9 @@ import {
   SpaceshipType,
 } from '../../databases/spaceshipDatabase';
 import { buttonStyles } from '../../styles/buttonStyles';
+import { addToCookies } from '../../utils/addToCookies';
 import { parseFromContextQuery } from '../../utils/contextQuery';
-import { getCookies, setCookies } from '../../utils/cookies';
-import { parsePrice } from '../../utils/parsePrice.js';
+import { parsePrice } from '../../utils/parsePrice';
 
 const productPageStyle = css`
   .container {
@@ -127,26 +127,7 @@ export default function Spaceship(props: Props): JSX.Element {
                 data-test-id="product-add-to-cart"
                 onClick={() => {
                   props.addToTotal(quantity);
-                  const existingCookie = getCookies('cart');
-                  if (existingCookie === undefined) {
-                    setCookies('cart', [
-                      { id: props.spaceship.id, quantity: quantity },
-                    ]);
-                    return;
-                  } else {
-                    const shipAlreadyInCart = existingCookie.find((obj) => {
-                      return obj.id === props.spaceship.id;
-                    });
-                    if (!shipAlreadyInCart) {
-                      existingCookie.push({
-                        id: props.spaceship.id,
-                        quantity: quantity,
-                      });
-                    } else {
-                      shipAlreadyInCart.quantity += quantity;
-                    }
-                    setCookies('cart', existingCookie);
-                  }
+                  addToCookies(props.spaceship.id, quantity);
                 }}
               >
                 Add to cart

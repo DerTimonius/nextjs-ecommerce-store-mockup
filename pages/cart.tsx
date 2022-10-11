@@ -15,7 +15,7 @@ import {
   getCookies,
   setCookies,
 } from '../utils/cookies';
-import { parsePrice } from '../utils/parsePrice.js';
+import { parsePrice } from '../utils/parsePrice';
 
 const cartStyles = css`
   .container {
@@ -79,7 +79,7 @@ const cartStyles = css`
 type SpaceshipInCartType = SpaceshipType & {
   quantity: number;
 };
-function getSumFromCart(spaceships: SpaceshipInCartType[]) {
+export function getSumFromCart(spaceships: SpaceshipInCartType[]) {
   let totalSum = 0;
   spaceships.map((spaceship) => {
     if (spaceship.quantity > 0) {
@@ -306,11 +306,10 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
       };
     },
   );
-
   return {
     props: {
       spaceships: parsedSpaceships,
-      parsed: parsedCookies,
+      parsedCookie: parsedCookies,
     },
   };
 }

@@ -6,7 +6,7 @@ import {
   getAllSpaceships,
   SpaceshipType,
 } from '../../databases/spaceshipDatabase';
-import { parsePrice } from '../../utils/parsePrice.js';
+import { parsePrice } from '../../utils/parsePrice';
 
 const productsStyle = css`
   padding: 12px 24px;
@@ -101,30 +101,35 @@ export default function Spaceships({ spaceships }: Props) {
                   key={`spaceship-id-${spaceship.id}`}
                   data-test-id={`product-${spaceship.id}`}
                 >
-                  <div key={`spaceship-id-${spaceship.id}`} className="product">
-                    <div className="product-hero">
-                      <h2>{spaceship.name}</h2>
-                      <Image
-                        src={`/img/${spaceship.id}-${spaceship.name
-                          .toLowerCase()
-                          .split(' ')
-                          .join('-')}.jpg`}
-                        width={300}
-                        height={200}
-                        alt={`${spaceship.name} in space`}
-                      />
-                    </div>
-                    <div className="product-overview">
-                      <p>
-                        Known from <strong>{spaceship.knownFrom}</strong>
-                      </p>
+                  <a data-test-id={`product-${spaceship.id}`}>
+                    <div
+                      key={`spaceship-id-${spaceship.id}`}
+                      className="product"
+                    >
+                      <div className="product-hero">
+                        <h2>{spaceship.name}</h2>
+                        <Image
+                          src={`/img/${spaceship.id}-${spaceship.name
+                            .toLowerCase()
+                            .split(' ')
+                            .join('-')}.jpg`}
+                          width={300}
+                          height={200}
+                          alt={`${spaceship.name} in space`}
+                        />
+                      </div>
+                      <div className="product-overview">
+                        <p>
+                          Known from <strong>{spaceship.knownFrom}</strong>
+                        </p>
 
-                      <p>
-                        Price <i>{parsePrice(spaceship.price)}</i>
-                      </p>
+                        <p>
+                          Price <i>{parsePrice(spaceship.price)}</i>
+                        </p>
+                      </div>
+                      <div className="product-link">View ship!</div>
                     </div>
-                    <div className="product-link">View ship!</div>
-                  </div>
+                  </a>
                 </Link>
               );
             })}
