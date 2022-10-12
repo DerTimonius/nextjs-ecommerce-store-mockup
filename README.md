@@ -2,9 +2,9 @@
 
 Hello. This is my e-commerce project which I programmed while being in the UpLeveled Bootcamp. As it is clearly obvious, this is completely fake although it has the same functionality as a real online shop - except for not storing anything when filling out the checkout form (and of course not accepting any payment). Since I am an avid sci-fi fan, I decided on selling space ships from movies and TV like the Rocinante from The Expanse or the Discovery One from 2001 - A Space Odyssey.
 
-![Screenshot of the landing page](/img/Screenshot-1.png)
-![Screenshot of the cart page](/img/Shopping-Cart.png)
-![Screenshot of the checkout page](/img/Checkout.png)
+![Screenshot of the landing page](public/img/Screenshot-1.png)
+![Screenshot of the cart page](public/img/Shopping-Cart.png)
+![Screenshot of the checkout page](public/img/Checkout.png)
 
 ## Technologies used in this project
 
