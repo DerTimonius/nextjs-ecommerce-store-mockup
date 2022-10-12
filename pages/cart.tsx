@@ -81,6 +81,7 @@ export type SpaceshipInCartType = SpaceshipType & {
   quantity: number;
 };
 
+// The next two functions change the visible quantity per ship or delete the ships
 function increaseQuantity(
   id: number,
   setCart: Function,
@@ -117,6 +118,7 @@ function decreaseQuantity(
     });
   }
 }
+// The next two functions remove one or all items from the cart (also from the cookies)
 function deleteAll(setCart: Function) {
   setCart([]);
   deleteCookies('cart');
@@ -135,6 +137,7 @@ function removeItem(
   const cookieWithoutItem = cookie.filter((item) => item.id !== id);
   setCookies('cart', cookieWithoutItem);
 }
+// Update the cookies to represent the changes made to the cart
 function updateCookies(cart: SpaceshipInCartType[]) {
   const existingCookie = getCookies('cart');
   if (!existingCookie) return null;
@@ -153,10 +156,7 @@ function updateCookies(cart: SpaceshipInCartType[]) {
 type Props = {
   spaceships: SpaceshipInCartType[];
   parsedCookie: CookieType[];
-  deleteTotal: Function;
-  decreaseOne: Function;
-  addOne: Function;
-  removeFromTotal: Function;
+  changeBoolean: Function;
 };
 export default function Cart(props: Props) {
   const [cart, setCart] = useState<SpaceshipInCartType[]>(props.spaceships);
@@ -182,7 +182,7 @@ export default function Cart(props: Props) {
                   className="delete-button"
                   onClick={() => {
                     deleteAll(setCart);
-                    props.deleteTotal();
+                    props.changeBoolean();
                   }}
                 >
                   Remove all
@@ -216,7 +216,7 @@ export default function Cart(props: Props) {
                                 id="btn-subtract"
                                 onClick={() => {
                                   decreaseQuantity(spaceship.id, setCart, cart);
-                                  props.decreaseOne();
+                                  props.changeBoolean();
                                 }}
                               >
                                 -
@@ -226,7 +226,7 @@ export default function Cart(props: Props) {
                                 id="btn-add"
                                 onClick={() => {
                                   increaseQuantity(spaceship.id, setCart, cart);
-                                  props.addOne();
+                                  props.changeBoolean();
                                 }}
                               >
                                 +
@@ -242,7 +242,7 @@ export default function Cart(props: Props) {
                           className="delete-button"
                           onClick={() => {
                             removeItem(cart, setCart, spaceship.id);
-                            props.removeFromTotal(spaceship.quantity);
+                            props.changeBoolean();
                           }}
                         >
                           Remove
@@ -281,11 +281,13 @@ export default function Cart(props: Props) {
 }
 
 export async function getServerSideProps(context: GetServerSidePropsContext) {
+  // Get the cookies - if there is no cookie, it will be an empty array
   const parsedCookies =
     context.req.cookies.cart !== undefined
       ? JSON.parse(context.req.cookies.cart)
       : [];
   const spaceships = await getAllSpaceships();
+  // Add quantity to the existing spaceship objects - either 0 or whatever is saved in the cookie
   const parsedSpaceships: SpaceshipInCartType[] = spaceships.map(
     (spaceship) => {
       return {

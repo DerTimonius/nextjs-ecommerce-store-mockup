@@ -78,6 +78,9 @@ const productsStyle = css`
     -ms-filter: grayscale(0%);
     -o-filter: grayscale(0%);
   }
+  .ignore-link {
+    all: unset;
+  }
 `;
 
 type Props = {
@@ -101,7 +104,10 @@ export default function Spaceships({ spaceships }: Props) {
                   key={`spaceship-id-${spaceship.id}`}
                   data-test-id={`product-${spaceship.id}`}
                 >
-                  <a data-test-id={`product-${spaceship.id}`}>
+                  <a
+                    data-test-id={`product-${spaceship.id}`}
+                    className="ignore-link"
+                  >
                     <div
                       key={`spaceship-id-${spaceship.id}`}
                       className="product"

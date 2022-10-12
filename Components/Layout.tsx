@@ -2,13 +2,13 @@ import Footer from './Footer';
 import Header from './Header';
 
 type Props = {
-  totalQuantity: number;
   children: JSX.Element;
+  cartQuantity: number;
 };
-function Layout({ totalQuantity, children }: Props) {
+function Layout({ children, cartQuantity }: Props) {
   return (
     <div>
-      <Header totalQuantity={totalQuantity} />
+      <Header cartQuantity={cartQuantity} />
       {children}
       <Footer />
     </div>

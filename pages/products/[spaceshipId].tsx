@@ -56,7 +56,7 @@ type ConditionalProps =
     };
 type Props =
   | {
-      addToTotal: Function;
+      changeBoolean: Function;
     } & ConditionalProps;
 export default function Spaceship(props: Props): JSX.Element {
   const [quantity, setQuantity] = useState(1);
@@ -126,8 +126,8 @@ export default function Spaceship(props: Props): JSX.Element {
                 id="btn-cart"
                 data-test-id="product-add-to-cart"
                 onClick={() => {
-                  props.addToTotal(quantity);
                   addToCookies(props.spaceship.id, quantity);
+                  props.changeBoolean();
                 }}
               >
                 Add to cart
@@ -155,8 +155,9 @@ export default function Spaceship(props: Props): JSX.Element {
 export async function getServerSideProps(
   context: GetServerSidePropsContext,
 ): Promise<GetServerSidePropsResult<ConditionalProps>> {
+  // Get spaceship id from query
   const spaceshipId = parseFromContextQuery(context.query.spaceshipId);
-
+  // Check if input was correct
   if (typeof spaceshipId === 'undefined') {
     context.res.statusCode = 404;
     return {
@@ -165,6 +166,7 @@ export async function getServerSideProps(
       },
     };
   }
+  // Fetch from database and check if response is okay
   const foundShip = await getSingleSpaceshipById(spaceshipId);
   if (typeof foundShip === 'undefined') {
     context.res.statusCode = 404;

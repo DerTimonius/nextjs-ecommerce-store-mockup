@@ -7,14 +7,14 @@ test('test of navigation and adding items to cart', async ({ page }) => {
   // Go to products page and check if 10 products are shown
   await page.locator(`[data-test-id="products-link"]`).click();
   await expect(page.locator('h1')).toHaveText('Our Spaceships');
-  await expect(page.locator(`.product`)).toHaveCount(10);
+  await expect(page.locator(`[data-test-id^="product-"]`)).toHaveCount(10);
   // Check on product and at to cart
-  await page.locator(`role=heading[name="Rocinante"]`).click();
+  await page.locator(`[data-test-id="product-2"]`).click();
   await expect(page).toHaveTitle('Rocinante, from The Expanse');
   await page.locator(`[data-test-id="product-add-to-cart"]`).click();
   // Go back to products page, check another products and add it to the cart twice by changing the quantity
-  await page.locator(`a:has-text('Our Spaceships')`).click();
-  await page.locator(`role=heading[name="Serenity"]`).click();
+  await page.locator(`[data-test-id="products-link"]`).click();
+  await page.locator(`[data-test-id="product-5"]`).click();
   await expect(page).toHaveTitle('Serenity, from Firefly');
   await page.locator(`role=button[name="+"]`).dblclick();
   await page.locator(`[data-test-id="product-add-to-cart"]`).click();

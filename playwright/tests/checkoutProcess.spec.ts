@@ -21,6 +21,8 @@ test('checkout flow and thank you page', async ({ page }) => {
   await page
     .locator(`[data-test-id="checkout-credit-card"]`)
     .fill('4242424242424242');
+  await page.locator(`[data-test-id="checkout-confirm-order"]`).click();
+  await expect(page).toHaveTitle('Checkout');
   await page.locator(`[data-test-id="checkout-expiration-date"]`).fill('11/24');
   await page.locator(`[data-test-id="checkout-security-code"]`).fill('123');
   await page.locator(`[data-test-id="checkout-confirm-order"]`).click();

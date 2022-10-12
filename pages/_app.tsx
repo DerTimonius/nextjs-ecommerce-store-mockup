@@ -1,42 +1,33 @@
 import '../styles/globals.css';
 import { css, Global } from '@emotion/react';
+import { LinearProgress } from '@mui/material';
 import { AppProps } from 'next/app';
 import { useEffect, useState } from 'react';
 import Layout from '../Components/Layout';
 import { getCookies } from '../utils/cookies';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  const [totalQuantity, setTotalQuantity] = useState<number>(0);
+  const [isLoading, setIsLoading] = useState(true);
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
+  // This boolean is used to trigger the change of the number shown at the cart (see useEffect below).
+  const [changedValue, setChangedValue] = useState(true);
   function updateQuantity() {
     const cartCookie = getCookies('cart');
     if (cartCookie) {
       let quantity = 0;
       cartCookie.map((item) => (quantity += item.quantity));
-      setTotalQuantity(quantity);
+      setCartQuantity(quantity);
+      return;
     }
+    setCartQuantity(0);
   }
   useEffect(() => {
     updateQuantity();
-  }, []);
-
-  function addToTotal(number: number) {
-    const sum = totalQuantity;
-    setTotalQuantity(sum + number);
-  }
-  function addOne() {
-    const sum = totalQuantity;
-    setTotalQuantity(sum + 1);
-  }
-  function decreaseOne() {
-    const sum = totalQuantity;
-    setTotalQuantity(sum - 1);
-  }
-  function deleteTotal() {
-    setTotalQuantity(0);
-  }
-  function removeFromTotal(quantity: number) {
-    const sum = totalQuantity;
-    setTotalQuantity(sum - quantity);
+    setIsLoading(false);
+  }, [changedValue]);
+  // This function is called everytime a change is made to the cart (either adding something to the cart at the product page or change the numbers at the cart page)
+  function changeBoolean() {
+    setChangedValue(!changedValue);
   }
 
   return (
@@ -82,16 +73,13 @@ function MyApp({ Component, pageProps }: AppProps) {
           }
         `}
       />
-      <Layout totalQuantity={totalQuantity}>
-        <Component
-          {...pageProps}
-          addToTotal={addToTotal}
-          addOne={addOne}
-          decreaseOne={decreaseOne}
-          deleteTotal={deleteTotal}
-          removeFromTotal={removeFromTotal}
-        />
-      </Layout>
+      {isLoading ? (
+        <LinearProgress />
+      ) : (
+        <Layout cartQuantity={cartQuantity}>
+          <Component {...pageProps} changeBoolean={changeBoolean} />
+        </Layout>
+      )}
     </div>
   );
 }

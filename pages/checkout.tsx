@@ -1,5 +1,6 @@
 import { css } from '@emotion/react';
 import Head from 'next/head';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { buttonStyles } from '../styles/buttonStyles';
 import { checkNumberLength } from '../utils/checkFormData';
@@ -38,9 +39,6 @@ const checkoutStyles = css`
     width: 50px;
   }
 `;
-const incorrectField = css`
-  border: 3px solid orangered;
-`;
 type FormDateType = {
   firstName?: string;
   lastName?: string;
@@ -50,8 +48,7 @@ type FormDateType = {
   postalCode?: number;
   country?: string;
   creditCardNumber?: number;
-  expirationDateMonth?: number;
-  expirationDateYear?: number;
+  expirationDate?: number;
   securityCode?: number;
 };
 
@@ -67,13 +64,30 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
       [e.target.id]: e.target.value,
     });
   };
+  const everythingFilled = () => {
+    return (
+      formData.firstName &&
+      formData.lastName &&
+      formData.email &&
+      formData.address &&
+      formData.city &&
+      formData.postalCode &&
+      formData.country &&
+      formData.creditCardNumber &&
+      formData.expirationDate &&
+      formData.securityCode
+    );
+  };
+
+  // Check at submit if credit card number is the correct number and if every field is filled out.
   const handleSubmit = () => {
     if (formData.creditCardNumber) {
       if (!checkNumberLength(formData.creditCardNumber, 16)) {
-        // e.preventDefault();
         setIsCardNumberCorrect(false);
-      } else if (isCardNumberCorrect) {
+      } else if (everythingFilled() && isCardNumberCorrect) {
         setConfirmed(true);
+        deleteCookies('cart');
+        deleteTotal();
       }
     }
   };
@@ -168,7 +182,6 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
                   id="creditCardNumber"
                   data-test-id="checkout-credit-card"
                   onChange={handleChange}
-                  css={!isCardNumberCorrect && incorrectField}
                   required
                 />
                 <div className="expiration-date">
@@ -177,7 +190,7 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
                   <input
                     type="text"
                     name="expiration-date"
-                    id="expiration-date"
+                    id="expirationDate"
                     data-test-id="checkout-expiration-date"
                     onChange={handleChange}
                     placeholder="MM/YY"
@@ -201,12 +214,14 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
               data-test-id="checkout-confirm-order"
               onClick={() => {
                 handleSubmit();
-                deleteCookies('cart');
-                deleteTotal();
               }}
             >
               Confirm order!
             </button>{' '}
+            <br />
+            <Link href="/cart">
+              <button className="btn">Go back to cart</button>
+            </Link>
           </>
         )}
       </main>

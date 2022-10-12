@@ -42,9 +42,9 @@ const headerStyles = css`
 `;
 
 type Props = {
-  totalQuantity: number;
+  cartQuantity: number;
 };
-function Header({ totalQuantity }: Props) {
+function Header({ cartQuantity }: Props) {
   return (
     <header css={headerStyles}>
       <Link href="/">
@@ -68,7 +68,7 @@ function Header({ totalQuantity }: Props) {
           <Link href="/cart" data-test-id="cart-link">
             <a data-test-id="cart-link">
               <Badge
-                badgeContent={totalQuantity}
+                badgeContent={cartQuantity}
                 color="error"
                 data-test-id="cart-count"
               >
