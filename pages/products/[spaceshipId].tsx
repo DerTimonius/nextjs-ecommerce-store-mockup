@@ -106,7 +106,7 @@ export default function Spaceship(props: Props): JSX.Element {
             <div className="product-cart">
               <p>Known from: {props.spaceship.knownFrom}</p>
               <div>
-                <p>Quantity: {quantity}</p>
+                <p data-test-id="product-quantity">Quantity: {quantity}</p>
                 <button onClick={() => setQuantity(quantity + 1)} id="btn-add">
                   +
                 </button>
@@ -132,9 +132,9 @@ export default function Spaceship(props: Props): JSX.Element {
               >
                 Add to cart
               </button>
-              <p data-test-id="product-price">
+              <div data-test-id="product-price">
                 Price: {parsePrice(props.spaceship.price)}{' '}
-              </p>
+              </div>
             </div>
           </div>
           <br />

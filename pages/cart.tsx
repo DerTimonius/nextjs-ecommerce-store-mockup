@@ -190,7 +190,11 @@ export default function Cart(props: Props) {
                 {cart.map((spaceship) => {
                   if (spaceship.quantity > 0) {
                     return (
-                      <div key={`spaceship-${spaceship.id}`} className="item">
+                      <div
+                        key={`spaceship-${spaceship.id}`}
+                        className="item"
+                        data-test-id={`cart-product-${spaceship.id}`}
+                      >
                         <div>
                           <Image
                             src={`/img/${spaceship.id}-${spaceship.name
@@ -221,7 +225,11 @@ export default function Cart(props: Props) {
                               >
                                 -
                               </button>
-                              <span>{spaceship.quantity}</span>
+                              <span
+                                data-test-id={`cart-product-quantity-${spaceship.id}`}
+                              >
+                                {spaceship.quantity}
+                              </span>
                               <button
                                 id="btn-add"
                                 onClick={() => {
