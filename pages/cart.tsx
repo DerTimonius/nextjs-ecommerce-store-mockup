@@ -248,6 +248,7 @@ export default function Cart(props: Props) {
                         </div>
                         <button
                           className="delete-button"
+                          data-test-id={`cart-product-remove-${spaceship.id}`}
                           onClick={() => {
                             removeItem(cart, setCart, spaceship.id);
                             props.changeBoolean();

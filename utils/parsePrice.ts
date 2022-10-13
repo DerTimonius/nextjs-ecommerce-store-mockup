@@ -1,6 +1,3 @@
 export function parsePrice(price: number): string {
-  return new Intl.NumberFormat('de-DE', {
-    style: 'currency',
-    currency: 'EUR',
-  }).format(price);
+  return new Intl.NumberFormat('de-DE').format(price);
 }

@@ -132,9 +132,13 @@ export default function Spaceship(props: Props): JSX.Element {
               >
                 Add to cart
               </button>
-              <div data-test-id="product-price">
-                Price: {parsePrice(props.spaceship.price)}{' '}
-              </div>
+              <p>
+                {' '}
+                Price:{' '}
+                <span data-test-id="product-price">
+                  {parsePrice(props.spaceship.price)}
+                </span>
+              </p>
             </div>
           </div>
           <br />
