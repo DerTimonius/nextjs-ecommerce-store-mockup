@@ -37,7 +37,7 @@ test('test of navigation and adding items to cart', async ({ page }) => {
     .click();
   await page.locator(`role=button[name="+"]`).dblclick();
   await expect(page.locator(`[data-test-id="cart-total"]`)).toHaveText(
-    '200.000.000,00 €',
+    '200.000.000',
   );
   await expect(page.locator(`[data-test-id="cart-checkout"]`)).toBeVisible();
 });
