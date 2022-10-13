@@ -3,7 +3,7 @@ import { GetServerSidePropsContext, GetServerSidePropsResult } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import {
   getSingleSpaceshipById,
   SpaceshipType,
@@ -45,6 +45,13 @@ const productPageStyle = css`
   p span {
     font-size: 1.1rem;
     font-style: italic;
+  }
+  input {
+    border-radius: 5px;
+    font-family: inherit;
+    width: 64px;
+    margin-left: 8px;
+    background-color: rgba(255, 255, 255, 0.8);
   }
 `;
 type ConditionalProps =
@@ -106,7 +113,19 @@ export default function Spaceship(props: Props): JSX.Element {
             <div className="product-cart">
               <p>Known from: {props.spaceship.knownFrom}</p>
               <div>
-                <p data-test-id="product-quantity">Quantity: {quantity}</p>
+                <div>
+                  <p>
+                    Quantity:
+                    <input
+                      type="number"
+                      data-test-id="product-quantity"
+                      value={quantity}
+                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                        setQuantity(event.target.valueAsNumber)
+                      }
+                    />{' '}
+                  </p>
+                </div>
                 <button onClick={() => setQuantity(quantity + 1)} id="btn-add">
                   +
                 </button>
