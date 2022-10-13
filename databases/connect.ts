@@ -1,7 +1,7 @@
 import { config } from 'dotenv-safe';
 import postgres from 'postgres';
 
-config();
+if (process.env.NODE_ENV !== 'production') config();
 
 declare module globalThis {
   let postgresClient: ReturnType<typeof postgres> | undefined;
