@@ -241,9 +241,7 @@ export default function Cart(props: Props) {
                               </button>
                             </p>
 
-                            <h4>
-                              {parsePrice(spaceship.quantity * spaceship.price)}
-                            </h4>
+                            <h4>{spaceship.quantity * spaceship.price}</h4>
                           </div>
                         </div>
                         <button
