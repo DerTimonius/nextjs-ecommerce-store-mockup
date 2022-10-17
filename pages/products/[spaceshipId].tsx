@@ -120,9 +120,11 @@ export default function Spaceship(props: Props): JSX.Element {
                       type="number"
                       data-test-id="product-quantity"
                       value={quantity}
-                      onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                        setQuantity(event.target.valueAsNumber)
-                      }
+                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
+                        if (event.target.valueAsNumber > 0) {
+                          setQuantity(event.target.valueAsNumber);
+                        }
+                      }}
                     />{' '}
                   </p>
                 </div>
@@ -151,12 +153,9 @@ export default function Spaceship(props: Props): JSX.Element {
               >
                 Add to cart
               </button>
-              <p>
-                {' '}
-                Price:{' '}
-                <span data-test-id="product-price">
-                  {parsePrice(props.spaceship.price)}
-                </span>
+              <p>Price:</p>
+              <p data-test-id="product-price">
+                {parsePrice(props.spaceship.price)}
               </p>
             </div>
           </div>

@@ -38,7 +38,7 @@ const spaceshipDatabase = [
     first_appearence: 2016,
     condition: 'The reactor almost exploded, but the inside is like a forest!',
     description:
-      'The Avalon has three long, thin modules that wrap around a common center a spin. The ship is powered by eight nuclear fusion reactoprs and can run autonomously, healing most systems even with the crew asleep or in hibernation, for which a large number of pods are available. To house the immense number of pods and sleeping cabinets, as well as recreational and working facilities, the Avalon measures about 1 kilometer in length.\nIt was one its way to Homestead II for colonization of exoplanets.',
+      'The Avalon has three long, thin modules that wrap around a common center and spin. The ship is powered by eight nuclear fusion reactoprs and can run autonomously, healing most systems even with the crew asleep or in hibernation, for which a large number of pods are available. To house the immense number of pods and sleeping cabinets, as well as recreational and working facilities, the Avalon measures about 1 kilometer in length.\nIt was one its way to Homestead II for colonization of exoplanets.',
     price: 250000000,
   },
   {

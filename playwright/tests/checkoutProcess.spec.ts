@@ -5,8 +5,8 @@ test('checkout flow and thank you page', async ({ page }) => {
 
   await expect(page).toHaveTitle('Checkout');
 
-  await page.locator(`[data-test-id="checkout-first-name"]`).fill('John');
-  await page.locator(`[data-test-id="checkout-last-name"]`).fill('Doe');
+  await page.locator(`[data-test-id="checkout-first-name"]`).fill('Sherlock');
+  await page.locator(`[data-test-id="checkout-last-name"]`).fill('Holmes');
   await page
     .locator(`[data-test-id="checkout-email"]`)
     .fill('someone@gmail.com');

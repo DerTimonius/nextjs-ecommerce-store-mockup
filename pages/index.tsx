@@ -1,4 +1,5 @@
 import { css } from '@emotion/react';
+// import { ImageList, ImageListItem, ImageListItemBar } from '@mui/material';
 import Head from 'next/head';
 import Link from 'next/link';
 import ImageCarousel from '../Components/Carousel';
@@ -91,6 +92,61 @@ export default function Home() {
         </h2>
         <br />
         <ImageCarousel className="carousel" />
+        {/* <ImageList
+          sx={{ width: 760, height: 490 }}
+          variant="standard"
+          cols={3}
+          rowHeight={240}
+        >
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/2-rocinante.jpg"
+              alt="Rocinante, spaceship, from The Expanse"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Rocinante" />
+          </ImageListItem>
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/4-avalon.jpg"
+              alt="Avalon, spaceship, from Passengers"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Avalon" />
+          </ImageListItem>
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/8-endurance.jpg"
+              alt="Endurance, spaceship, from Interstellar"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Endurance" />
+          </ImageListItem>
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/10-discovery-one.jpg"
+              alt="Discovery One, spaceship, from 2001- A space odyssey"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Discovery One" />
+          </ImageListItem>
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/7-pods.jpg"
+              alt="Pods, spaceship, from Arrival"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Pods" />
+          </ImageListItem>
+          <ImageListItem cols={1} rows={1}>
+            <img
+              src="/img/5-serenity.jpg"
+              alt="Serenity, spaceship, from Firefly"
+              loading="lazy"
+            />
+            <ImageListItemBar position="bottom" title="Serenity" />
+          </ImageListItem>
+        </ImageList> */}
         <div className="product-link">
           <Link href="/products">View our ships!</Link>
         </div>

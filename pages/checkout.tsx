@@ -52,7 +52,11 @@ type FormDateType = {
   securityCode?: number;
 };
 
-export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
+export default function Checkout({
+  changeBoolean,
+}: {
+  changeBoolean: Function;
+}) {
   const [confirmed, setConfirmed] = useState(false);
   const [formData, setFormData] = useState<FormDateType>({});
   const [isCardNumberCorrect, setIsCardNumberCorrect] = useState(true);
@@ -87,7 +91,7 @@ export default function Checkout({ deleteTotal }: { deleteTotal: Function }) {
       } else if (everythingFilled() && isCardNumberCorrect) {
         setConfirmed(true);
         deleteCookies('cart');
-        deleteTotal();
+        changeBoolean();
       }
     }
   };
