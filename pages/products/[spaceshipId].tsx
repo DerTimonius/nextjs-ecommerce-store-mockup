@@ -124,7 +124,7 @@ export default function Spaceship(props: Props): JSX.Element {
                         if (event.target.valueAsNumber > 0) {
                           setQuantity(event.target.valueAsNumber);
                         } else {
-                          setQuantity(1);
+                          setQuantity('');
                         }
                       }}
                     />{' '}
