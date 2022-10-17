@@ -123,8 +123,9 @@ export default function Spaceship(props: Props): JSX.Element {
                       onChange={(event: ChangeEvent<HTMLInputElement>) => {
                         if (event.target.valueAsNumber > 0) {
                           setQuantity(event.target.valueAsNumber);
+                        } else {
+                          setQuantity(1);
                         }
-                        setQuantity(1);
                       }}
                     />{' '}
                   </p>
