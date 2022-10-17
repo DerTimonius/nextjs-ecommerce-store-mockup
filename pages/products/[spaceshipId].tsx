@@ -11,7 +11,8 @@ import {
 import { buttonStyles } from '../../styles/buttonStyles';
 import { addToCookies } from '../../utils/addToCookies';
 import { parseFromContextQuery } from '../../utils/contextQuery';
-import { parsePrice } from '../../utils/parsePrice';
+
+// import { parsePrice } from '../../utils/parsePrice';
 
 const productPageStyle = css`
   .container {
@@ -154,9 +155,7 @@ export default function Spaceship(props: Props): JSX.Element {
                 Add to cart
               </button>
               <p>Price:</p>
-              <p data-test-id="product-price">
-                {parsePrice(props.spaceship.price)}
-              </p>
+              <p data-test-id="product-price">{props.spaceship.price}</p>
             </div>
           </div>
           <br />

@@ -266,7 +266,7 @@ export default function Cart(props: Props) {
                   <h4>
                     Your total is €{' '}
                     <span data-test-id="cart-total">
-                      {parsePrice(getSumFromCart(cart))}
+                      {getSumFromCart(cart)}
                     </span>
                   </h4>
                   <Link href="/checkout">
