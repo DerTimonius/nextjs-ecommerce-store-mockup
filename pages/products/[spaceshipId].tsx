@@ -12,8 +12,6 @@ import { buttonStyles } from '../../styles/buttonStyles';
 import { addToCookies } from '../../utils/addToCookies';
 import { parseFromContextQuery } from '../../utils/contextQuery';
 
-// import { parsePrice } from '../../utils/parsePrice';
-
 const productPageStyle = css`
   .container {
     color: #ddd;
@@ -67,7 +65,7 @@ type Props =
       changeBoolean: Function;
     } & ConditionalProps;
 export default function Spaceship(props: Props): JSX.Element {
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState<number | string>(1);
   if ('error' in props) {
     return (
       <>
@@ -121,22 +119,35 @@ export default function Spaceship(props: Props): JSX.Element {
                       type="number"
                       data-test-id="product-quantity"
                       value={quantity}
+                      onFocus={() => setQuantity('')}
                       onChange={(event: ChangeEvent<HTMLInputElement>) => {
                         if (event.target.valueAsNumber > 0) {
                           setQuantity(event.target.valueAsNumber);
                         }
+                        setQuantity(1);
                       }}
                     />{' '}
                   </p>
                 </div>
-                <button onClick={() => setQuantity(quantity + 1)} id="btn-add">
+                <button
+                  onClick={() => {
+                    if (typeof quantity !== 'string') {
+                      setQuantity(quantity + 1);
+                    } else {
+                      setQuantity(1);
+                    }
+                  }}
+                  id="btn-add"
+                >
                   +
                 </button>
                 <button
                   id="btn-subtract"
                   onClick={() => {
-                    if (quantity >= 2) {
-                      setQuantity(quantity - 1);
+                    if (typeof quantity !== 'string') {
+                      if (quantity >= 2) {
+                        setQuantity(quantity - 1);
+                      }
                     }
                   }}
                 >
@@ -148,8 +159,10 @@ export default function Spaceship(props: Props): JSX.Element {
                 id="btn-cart"
                 data-test-id="product-add-to-cart"
                 onClick={() => {
-                  addToCookies(props.spaceship.id, quantity);
-                  props.changeBoolean();
+                  if (typeof quantity !== 'string') {
+                    addToCookies(props.spaceship.id, quantity);
+                    props.changeBoolean();
+                  }
                 }}
               >
                 Add to cart
