@@ -117,14 +117,20 @@ export default function Spaceship(props: Props): JSX.Element {
                     Quantity:
                     <input
                       type="number"
+                      id="quantity"
                       data-test-id="product-quantity"
                       value={quantity}
+                      onKeyPress={(event) => {
+                        if (event.key === 'Enter') {
+                          event.currentTarget.blur();
+                        }
+                      }}
                       onFocus={() => setQuantity('')}
                       onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        if (event.target.valueAsNumber > 0) {
-                          setQuantity(event.target.valueAsNumber);
+                        if (Number(event.target.value) > 0) {
+                          setQuantity(Number(event.target.value));
                         } else {
-                          setQuantity('');
+                          setQuantity(1);
                         }
                       }}
                     />{' '}
