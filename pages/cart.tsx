@@ -81,86 +81,73 @@ export type SpaceshipInCartType = SpaceshipType & {
   quantity: number;
 };
 
-// The next two functions change the visible quantity per ship or delete the ships
-function increaseQuantity(
-  id: number,
-  setCart: Function,
-  cart: SpaceshipInCartType[],
-) {
-  const correctShip = cart.find((obj) => {
-    return obj.id === id;
-  });
-  if (correctShip) {
-    setCart((prev: SpaceshipInCartType[]) => {
-      return prev.map((item) =>
-        item.id === correctShip.id
-          ? { ...item, quantity: correctShip.quantity + 1 }
-          : item,
-      );
-    });
-  }
-}
-function decreaseQuantity(
-  id: number,
-  setCart: Function,
-  cart: SpaceshipInCartType[],
-) {
-  const correctShip = cart.find((obj) => {
-    return obj.id === id;
-  });
-  if (correctShip) {
-    setCart((prev: SpaceshipInCartType[]) => {
-      return prev.map((item) =>
-        item.id === correctShip.id
-          ? { ...item, quantity: correctShip.quantity - 1 }
-          : item,
-      );
-    });
-  }
-}
-// The next two functions remove one or all items from the cart (also from the cookies)
-function deleteAll(setCart: Function) {
-  setCart([]);
-  deleteCookies('cart');
-}
-function removeItem(
-  cart: SpaceshipInCartType[],
-  setCart: Function,
-  id: number,
-) {
-  const newCart = cart.filter((item) => item.id !== id);
-  setCart(newCart);
-  const cookie = getCookies('cart');
-  if (!cookie) {
-    return;
-  }
-  const cookieWithoutItem = cookie.filter((item) => item.id !== id);
-  setCookies('cart', cookieWithoutItem);
-}
-// Update the cookies to represent the changes made to the cart
-function updateCookies(cart: SpaceshipInCartType[]) {
-  const existingCookie = getCookies('cart');
-  if (!existingCookie) return null;
-  cart.map((cartItem) => {
-    return existingCookie.map((cookieItem) => {
-      if (cartItem.id === cookieItem.id) {
-        cookieItem.quantity = cartItem.quantity;
-        return cookieItem;
-      }
-      return null;
-    });
-  });
-  setCookies('cart', existingCookie);
-}
-
 type Props = {
   spaceships: SpaceshipInCartType[];
   parsedCookie: CookieType[];
-  changeBoolean: Function;
+  changeBoolean: () => void;
 };
 export default function Cart(props: Props) {
   const [cart, setCart] = useState<SpaceshipInCartType[]>(props.spaceships);
 
+  // The next two functions change the visible quantity per ship or delete the ships
+  function increaseQuantity(id: number) {
+    const correctShip = cart.find((obj) => {
+      return obj.id === id;
+    });
+    if (correctShip) {
+      setCart((prev: SpaceshipInCartType[]) => {
+        return prev.map((item) =>
+          item.id === correctShip.id
+            ? { ...item, quantity: correctShip.quantity + 1 }
+            : item,
+        );
+      });
+    }
+  }
+  function decreaseQuantity(id: number) {
+    const correctShip = cart.find((obj) => {
+      return obj.id === id;
+    });
+    if (correctShip) {
+      setCart((prev: SpaceshipInCartType[]) => {
+        return prev.map((item) =>
+          item.id === correctShip.id
+            ? { ...item, quantity: correctShip.quantity - 1 }
+            : item,
+        );
+      });
+    }
+  }
+  // The next two functions remove one or all items from the cart (also from the cookies)
+  function deleteAll() {
+    setCart([]);
+    deleteCookies('cart');
+  }
+  function removeItem(id: number) {
+    const newCart = cart.filter((item) => item.id !== id);
+    setCart(newCart);
+    const cookie = getCookies('cart');
+    if (!cookie) {
+      return;
+    }
+    const cookieWithoutItem = cookie.filter((item) => item.id !== id);
+    setCookies('cart', cookieWithoutItem);
+  }
+  // Update the cookies to represent the changes made to the cart
+  function updateCookies(cartInput: SpaceshipInCartType[]) {
+    const existingCookie = getCookies('cart');
+    if (!existingCookie) return null;
+    cartInput.map((cartItem) => {
+      return existingCookie.map((cookieItem) => {
+        if (cartItem.id === cookieItem.id) {
+          cookieItem.quantity = cartItem.quantity;
+          return cookieItem;
+        }
+        return null;
+      });
+    });
+    setCookies('cart', existingCookie);
+  }
   useEffect(() => {
     if (getCookies('cart')) {
       updateCookies(cart);
@@ -181,7 +168,7 @@ export default function Cart(props: Props) {
                 <button
                   className="delete-button"
                   onClick={() => {
-                    deleteAll(setCart);
+                    deleteAll();
                     props.changeBoolean();
                   }}
                 >
@@ -219,7 +206,7 @@ export default function Cart(props: Props) {
                               <button
                                 id="btn-subtract"
                                 onClick={() => {
-                                  decreaseQuantity(spaceship.id, setCart, cart);
+                                  decreaseQuantity(spaceship.id);
                                   props.changeBoolean();
                                 }}
                               >
@@ -233,7 +220,7 @@ export default function Cart(props: Props) {
                               <button
                                 id="btn-add"
                                 onClick={() => {
-                                  increaseQuantity(spaceship.id, setCart, cart);
+                                  increaseQuantity(spaceship.id);
                                   props.changeBoolean();
                                 }}
                               >
@@ -248,7 +235,7 @@ export default function Cart(props: Props) {
                           className="delete-button"
                           data-test-id={`cart-product-remove-${spaceship.id}`}
                           onClick={() => {
-                            removeItem(cart, setCart, spaceship.id);
+                            removeItem(spaceship.id);
                             props.changeBoolean();
                           }}
                         >

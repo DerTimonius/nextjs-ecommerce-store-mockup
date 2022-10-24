@@ -62,7 +62,7 @@ type ConditionalProps =
     };
 type Props =
   | {
-      changeBoolean: Function;
+      changeBoolean: () => void;
     } & ConditionalProps;
 export default function Spaceship(props: Props): JSX.Element {
   const [quantity, setQuantity] = useState<number | string>(1);
@@ -116,7 +116,7 @@ export default function Spaceship(props: Props): JSX.Element {
                   <p>
                     Quantity:
                     <input
-                      type="number"
+                      // type="number"
                       id="quantity"
                       data-test-id="product-quantity"
                       value={quantity}
@@ -126,20 +126,18 @@ export default function Spaceship(props: Props): JSX.Element {
                         }
                       }}
                       onFocus={() => setQuantity('')}
-                      onChange={(event: ChangeEvent<HTMLInputElement>) => {
-                        if (Number(event.target.value) > 0) {
-                          setQuantity(Number(event.target.value));
-                        } else {
-                          setQuantity(1);
-                        }
-                      }}
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        Number(e.currentTarget.value) < 0
+                          ? setQuantity(1)
+                          : setQuantity(e.currentTarget.value)
+                      }
                     />{' '}
                   </p>
                 </div>
                 <button
                   onClick={() => {
-                    if (typeof quantity !== 'string') {
-                      setQuantity(quantity + 1);
+                    if (quantity) {
+                      setQuantity(Number(quantity) + 1);
                     } else {
                       setQuantity(1);
                     }
@@ -151,9 +149,9 @@ export default function Spaceship(props: Props): JSX.Element {
                 <button
                   id="btn-subtract"
                   onClick={() => {
-                    if (typeof quantity !== 'string') {
+                    if (quantity) {
                       if (quantity >= 2) {
-                        setQuantity(quantity - 1);
+                        setQuantity(Number(quantity) - 1);
                       }
                     }
                   }}
@@ -164,12 +162,10 @@ export default function Spaceship(props: Props): JSX.Element {
               <br />
               <button
                 id="btn-cart"
-                data-test-id="product-add-to-cart"
+                data-test-id="product-add-to-cart"  
                 onClick={() => {
-                  if (typeof quantity !== 'string') {
-                    addToCookies(props.spaceship.id, quantity);
+                    addToCookies(props.spaceship.id, Number(quantity));
                     props.changeBoolean();
-                  }
                 }}
               >
                 Add to cart

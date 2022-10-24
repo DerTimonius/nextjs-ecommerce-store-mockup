@@ -16,7 +16,7 @@ const carouselStyles = css`
   }
 `;
 
-function ImageCarousel({ className }: { className: string }) {
+function ImageCarousel() {
   return (
     <div css={carouselStyles}>
       <h2>Some of our spaceships!</h2>

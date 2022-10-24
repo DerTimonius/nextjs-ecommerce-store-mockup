@@ -55,7 +55,7 @@ type FormDateType = {
 export default function Checkout({
   changeBoolean,
 }: {
-  changeBoolean: Function;
+  changeBoolean: () => void;
 }) {
   const [confirmed, setConfirmed] = useState(false);
   const [formData, setFormData] = useState<FormDateType>({});
@@ -192,7 +192,6 @@ export default function Checkout({
                   <label htmlFor="expiration-date">Expiration date</label>{' '}
                   <br />
                   <input
-                    type="text"
                     name="expiration-date"
                     id="expirationDate"
                     data-test-id="checkout-expiration-date"

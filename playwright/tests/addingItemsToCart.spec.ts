@@ -15,6 +15,7 @@ test('test of navigation and adding items to cart', async ({ page }) => {
   await expect(page.locator(`[data-test-id="product-price"]`)).not.toBeEmpty();
   await page.locator(`[data-test-id="product-quantity"]`).fill('3');
   await page.locator(`[data-test-id="product-add-to-cart"]`).click();
+  await expect(page.locator(`[data-test-id="cart-count"]`)).toHaveText('3');
   // Go back to products page, check another products and add it to the cart twice by changing the quantity
   await page.locator(`[data-test-id="products-link"]`).click();
   await page.locator(`[data-test-id="product-5"]`).click();
